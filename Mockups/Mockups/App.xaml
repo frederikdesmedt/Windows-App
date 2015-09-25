@@ -1,0 +1,63 @@
+﻿<Application
+    x:Class="Mockups.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mockups"
+    RequestedTheme="Light">
+
+    <Application.Resources>
+        <SolidColorBrush Color="#4183D7" x:Key="MainBackgroundBrush" />
+        <Color x:Key="ButtonDefaultBlue">#0B63D7</Color>
+        <Color x:Key="ButtonHoveredBlue">#0059CD</Color>
+
+        <Style x:Key="DefaultPageStyle" TargetType="Page">
+            <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}"/>
+        </Style>
+
+        <Style x:Key="BlueKeyStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="3" x:Name="LayoutRoot" RenderTransformOrigin="0.5, 0.5">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="ButtonBrush" Color="{StaticResource ButtonDefaultBlue}"/>
+                            </Border.Background>
+                            <Border.RenderTransform>
+                                <ScaleTransform x:Name="BorderScale" ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition To="PointerOver" GeneratedDuration="0:0:0.5" />
+                                    </VisualStateGroup.Transitions>
+
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ButtonDefaultBlue}"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="ButtonBrush"
+                                                            Storyboard.TargetProperty="Color" To="{StaticResource ButtonHoveredBlue}"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard Duration="0:0:0.1">
+                                            <DoubleAnimation Storyboard.TargetName="BorderScale" Storyboard.TargetProperty="RenderTranform.ScaleX" To="1.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="BorderScale" Storyboard.TargetProperty="RenderTranform.ScaleY" To="1.2"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid Padding ="10, 8, 10, 8">
+                                <ContentPresenter Foreground="White"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>
