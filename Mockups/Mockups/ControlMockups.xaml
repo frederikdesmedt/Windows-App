@@ -8,10 +8,10 @@
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
     <StackPanel>
-        <RadioButton Foreground="White" Content="Hello"/>
-        <RadioButton Content="World"/>
+        <RadioButton Content="Hello" Style="{StaticResource RadioButtonStyle}"/>
+        <RadioButton IsChecked="True" Content="World" Style="{StaticResource RadioButtonStyle}"/>
         <CheckBox Style="{StaticResource CheckboxStyle}">Checked item 1</CheckBox>
-        <CheckBox IsChecked="True">Checked item 2</CheckBox>
+        <CheckBox IsChecked="True" Style="{StaticResource CheckboxStyle}">Checked item 2</CheckBox>
         <CheckBox>Checked item 3</CheckBox>
     </StackPanel>
 </Page>

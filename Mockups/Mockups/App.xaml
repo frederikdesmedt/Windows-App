@@ -131,7 +131,89 @@
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
-            </Setter> 
+            </Setter>
+        </Style>
+
+        <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid Padding="0 6 0 6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Resources>
+                                <Color x:Key="RadioButtonColor">#87D37C</Color>
+                                <SolidColorBrush x:Key="RadioButtonColorBrush" Color="{StaticResource RadioButtonColor}"/>
+                            </Grid.Resources>
+
+                            <Border x:Name="RadioButtonBorder" Margin="-6 0 0 0" VerticalAlignment="Center" Width="20" Height="20" CornerRadius="20"
+                                    BorderBrush="{StaticResource RadioButtonColorBrush}" BorderThickness="2" Opacity="1" RenderTransformOrigin="0.5, 0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="RadioButtonScaling" ScaleX="1" ScaleY="1" />
+                                </Border.RenderTransform>
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="RadioButtonBackground" Color="{StaticResource RadioButtonColor}" Opacity="1"/>
+                                </Border.Background>
+                                <Ellipse x:Name="Checkmark" Width="0" Height="0" StrokeThickness="4" Stroke="{StaticResource RadioButtonColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <SolidColorBrush Color="White" Opacity="1"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                            </Border>
+
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Commons">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.1" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.1" Duration="0:0:0.1" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.1" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="Checking">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonBackground"
+                                                             Storyboard.TargetProperty="SolidColorBrush.Opacity" To="1" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Path.Opacity" To="1" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Ellipse.Width" To="18" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Ellipse.Height" To="18" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="RadioButtonBackground"
+                                                             Storyboard.TargetProperty="SolidColorBrush.Opacity" To="0" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Ellipse.Width" To="0" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Ellipse.Height" To="0" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>
