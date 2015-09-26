@@ -14,7 +14,7 @@
             <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}"/>
         </Style>
 
-        <Style x:Key="BlueKeyStyle" TargetType="Button">
+        <Style TargetType="Button">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -60,7 +60,7 @@
             </Setter>
         </Style>
 
-        <Style x:Key="CheckboxStyle" TargetType="CheckBox">
+        <Style TargetType="CheckBox">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -83,7 +83,7 @@
                                 <Border.Background>
                                     <SolidColorBrush x:Name="CheckBorderBackground" Color="{StaticResource CheckboxColor}" Opacity="1"/>
                                 </Border.Background>
-                                <Path x:Name="Checkmark" Opacity="0" Width="14" Height="14" Stroke="White" Data="M0 7L5 12 14 2" StrokeThickness="1.2">
+                                <Path x:Name="Checkmark" Opacity="0" Width="15" Height="15" Stroke="White" Data="M0 7L5 12 14 2.5" StrokeThickness="1.2">
                                     <Path.Fill>
                                         <SolidColorBrush Color="White" Opacity="0"/>
                                     </Path.Fill>
@@ -134,7 +134,7 @@
             </Setter>
         </Style>
 
-        <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
+        <Style TargetType="RadioButton">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -211,6 +211,21 @@
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MainTitleStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="30"/>
+        </Style>
+
+        <Style TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter Margin="0 2 0 2" SelectedBackground="#19FFFFFF" SelectedPointerOverBackground="#19FFFFFF" PointerOverBackground="#19FFFFFF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentMargin="7 5 7 5" PressedBackground="#19FFFFFF"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

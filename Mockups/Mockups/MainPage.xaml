@@ -7,12 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
-    <Grid VerticalAlignment="Center" Margin="0 -100 0 0" Height="100">
+    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 -100 0 0" Height="100">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30" Foreground="White" Grid.Row="0">Start planning your trip!</TextBlock>
-        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Style="{StaticResource BlueKeyStyle}" Click="OnNextPage">Let's do this</Button>
+        <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource MainTitleStyle}">This is the main title</TextBlock>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" Click="GotoControlMockups" Margin="0 0 5 0">Open ControlMockups</Button>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Click="GotoSelectTripPage">Open SelectTripPage</Button>
     </Grid>
 </Page>
