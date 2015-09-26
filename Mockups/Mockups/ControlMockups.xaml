@@ -1,0 +1,17 @@
+﻿<Page
+    x:Class="Mockups.ControlMockups"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Mockups"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
+
+    <StackPanel>
+        <RadioButton Foreground="White" Content="Hello"/>
+        <RadioButton Content="World"/>
+        <CheckBox Style="{StaticResource CheckboxStyle}">Checked item 1</CheckBox>
+        <CheckBox IsChecked="True">Checked item 2</CheckBox>
+        <CheckBox>Checked item 3</CheckBox>
+    </StackPanel>
+</Page>

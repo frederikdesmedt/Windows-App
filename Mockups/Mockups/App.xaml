@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Mockups"
-    RequestedTheme="Light">
+    RequestedTheme="Dark">
 
     <Application.Resources>
         <SolidColorBrush Color="#4183D7" x:Key="MainBackgroundBrush" />
@@ -58,6 +58,80 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <Style x:Key="CheckboxStyle" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="28"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Resources>
+                                <Color x:Key="CheckboxColor">#87D37C</Color>
+                                <SolidColorBrush x:Key="CheckboxColorBrush" Color="{StaticResource CheckboxColor}"/>
+                            </Grid.Resources>
+
+                            <Border x:Name="CheckBorder" Margin="-6 0 0 0" VerticalAlignment="Center" Width="20" Height="20"
+                                    BorderBrush="{StaticResource CheckboxColorBrush}" BorderThickness="2" Opacity="1" RenderTransformOrigin="0.5, 0.5">
+                                <Border.RenderTransform>
+                                    <ScaleTransform x:Name="CheckboxScaling" ScaleX="1" ScaleY="1" />
+                                </Border.RenderTransform>
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="CheckBorderBackground" Color="{StaticResource CheckboxColor}" Opacity="1"/>
+                                </Border.Background>
+                                <Path x:Name="Checkmark" Opacity="0" Width="14" Height="14" Stroke="White" Data="M0 7L5 12 14 2" StrokeThickness="1.2">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="White" Opacity="0"/>
+                                    </Path.Fill>
+                                </Path>
+                            </Border>
+
+                            <ContentPresenter Grid.Column="1" VerticalAlignment="Center"/>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="Commons">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckboxScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleX" To="1" Duration="0:0:0.1" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckboxScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckboxScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleX" To="1.1" Duration="0:0:0.1" />
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckboxScaling"
+                                                             Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.1" Duration="0:0:0.1" />
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="Checking">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckBorderBackground"
+                                                             Storyboard.TargetProperty="SolidColorBrush.Opacity" To="1" Duration="0:0:0.1"/>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="Checkmark"
+                                                             Storyboard.TargetProperty="Path.Opacity" To="1" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <Storyboard>
+                                            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="CheckBorderBackground"
+                                                             Storyboard.TargetProperty="SolidColorBrush.Opacity" To="0" Duration="0:0:0.1"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter> 
         </Style>
     </Application.Resources>
 </Application>

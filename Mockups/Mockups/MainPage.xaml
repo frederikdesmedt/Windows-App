@@ -13,6 +13,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="30" Foreground="White" Grid.Row="0">Start planning your trip!</TextBlock>
-        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Style="{StaticResource BlueKeyStyle}">Let's do this</Button>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.Row="1" Style="{StaticResource BlueKeyStyle}" Click="OnNextPage">Let's do this</Button>
     </Grid>
 </Page>
