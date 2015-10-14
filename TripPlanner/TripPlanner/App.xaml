@@ -10,11 +10,15 @@
         <Color x:Key="ButtonDefaultBlue">#0B63D7</Color>
         <Color x:Key="ButtonHoveredBlue">#0059CD</Color>
 
-        <Style x:Key="DefaultPageStyle" TargetType="Page">
+        <Style x:Key="WhiteForeground" TargetType="Control">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style x:Key="DefaultPageStyle" TargetType="Page" BasedOn="{StaticResource WhiteForeground}">
             <Setter Property="Background" Value="{StaticResource MainBackgroundBrush}"/>
         </Style>
 
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource WhiteForeground}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
@@ -230,5 +234,18 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="DefaultPivotStyle" TargetType="Pivot" BasedOn="{StaticResource WhiteForeground}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

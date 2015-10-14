@@ -5,9 +5,23 @@
     xmlns:local="using:TripPlanner"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:custom="using:TripPlanner.ui"
+    mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        
+        <Pivot Grid.Row="0" Style="{StaticResource DefaultPivotStyle}">
+            <PivotItem>
+                <PivotItem.Header>
+                    <custom:TripPivotItem Title="Bla" Grid.Row="0" Glyph="&#xE10F;"/>
+                </PivotItem.Header>
+            </PivotItem>
+            <PivotItem Header="Trips"/>
+        </Pivot>
     </Grid>
 </Page>
