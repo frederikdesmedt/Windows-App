@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 
 namespace TripPlanner.MVVM.Model
 {
-    class List {
-        public List<Item> lijst;
-        public List()
-        {
-         lijst = new List<Item>();
-        }
+    public class TripList {
+        public List<Item> list = new List<Item>();
 
-        public void Add_Item(Item item)
+        public void AddItem(Item item)
         {
             lijst.Add(item);
         }
 
-        public void Delete_Item(Item item)
+        public void DeleteItem(Item item)
         {
             lijst.Remove(item);
         }
