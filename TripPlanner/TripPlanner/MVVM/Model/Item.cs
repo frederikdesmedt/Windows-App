@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Les3_Data.MVVM.Model
+namespace TripPlanner.MVVM.Model
 {
     public class Item : INotifyPropertyChanged
     {
