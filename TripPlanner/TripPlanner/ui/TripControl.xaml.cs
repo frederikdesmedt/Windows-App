@@ -50,6 +50,7 @@ namespace TripPlanner.ui
         private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Editing trip " + Trip.Name);
+            Trip_OnTapped(sender, null);
         }
 
         private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
@@ -60,6 +61,8 @@ namespace TripPlanner.ui
         private void Trip_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             Debug.WriteLine("Default action for trip in listview");
+            Frame f = Window.Current.Content as Frame;
+            f.Navigate(typeof (TripEditor), Trip);
         }
     }
 }

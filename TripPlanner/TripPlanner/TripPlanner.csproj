@@ -110,6 +110,9 @@
     <Compile Include="ui\TripControl.xaml.cs">
       <DependentUpon>TripControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\TripEditor.xaml.cs">
+      <DependentUpon>TripEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\TripPivotItem.xaml.cs">
       <DependentUpon>TripPivotItem.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ui\TripControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ui\TripEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
