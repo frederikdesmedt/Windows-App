@@ -99,13 +99,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
+    <Compile Include="Model\ISelfRepresentable.cs" />
+    <Compile Include="ui\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Trip.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ui\TripControl.xaml.cs">
+      <DependentUpon>TripControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\TripPivotItem.xaml.cs">
       <DependentUpon>TripPivotItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\TripList.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -128,9 +136,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="ui\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui\TripControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\TripPivotItem.xaml">
       <SubType>Designer</SubType>
