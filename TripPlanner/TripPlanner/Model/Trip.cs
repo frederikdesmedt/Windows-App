@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Windows.Graphics.Printing.OptionDetails;
 using Windows.UI.Notifications;
 using TripPlanner.Annotations;
+using Windows.UI.Xaml;
 
 namespace TripPlanner.Model
 {

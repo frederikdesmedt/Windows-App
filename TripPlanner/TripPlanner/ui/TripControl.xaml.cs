@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.Model;
+using System.Diagnostics;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -23,6 +24,7 @@ namespace TripPlanner.ui
         public TripControl()
         {
             this.InitializeComponent();
+            
         }
 
         public static DependencyProperty TripProp = DependencyProperty.Register("Trip", typeof(Trip), typeof(TripControl), null);
@@ -34,12 +36,30 @@ namespace TripPlanner.ui
             {
                 SetValue(TripProp, value);
                 DataContext = value;
+                Bindings.Update(); //can't use metadata in dependency property because the callback would be a static method
             }
         }
 
         public void OnTripHolding(object sender, RightTappedRoutedEventArgs args)
         {
-            Trip trip = Trip;
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Editing trip " + Trip.Name);
+        }
+
+        private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Deleting trip " + Trip.Name);
+        }
+
+        private void Trip_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            Debug.WriteLine("Default action for trip in listview");
         }
     }
 }
