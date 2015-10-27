@@ -62,7 +62,7 @@ namespace TripPlanner.ui
         //{
         //    Debug.WriteLine("Default action for trip in listview");
         //    Frame f = Window.Current.Content as Frame;
-        //    f.Navigate(typeof (TripEditor), Trip);
+        //    f.Navigate(typeof (TripView), Trip);
         //}
     }
 }

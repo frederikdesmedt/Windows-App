@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,32 +21,18 @@ namespace TripPlanner.ui
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TripView : Page
+    public sealed partial class EditTrip : Page
     {
-
         private Trip Trip { get; set; }
-        private MainPage MainPage { get; set; }
-        public TripView()
+
+        public EditTrip()
         {
             this.InitializeComponent();
         }
 
-        public TripView(Trip trip, MainPage main) : this()
+        public EditTrip(Trip trip) : this()
         {
             Trip = trip;
-            MainPage = main;
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            Trip = e.Parameter as Trip;
-            Bindings.Update();
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            MainPage.OpenEditor(Trip);
         }
     }
 }

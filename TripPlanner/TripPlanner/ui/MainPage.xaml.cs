@@ -44,7 +44,19 @@ namespace TripPlanner
         {
             PivotItem item = new PivotItem
             {
-                Content = new TripEditor(trip)
+                Content = new TripView(trip, this)
+            };
+
+            MainPivot.Items?.Add(item);
+            MainPivot.SelectedItem = item;
+            TempItems.Add(item);
+        }
+
+        public void OpenEditor(Trip trip)
+        {
+            PivotItem item = new PivotItem
+            {
+                Content = new EditTrip(trip)
             };
 
             MainPivot.Items?.Add(item);
