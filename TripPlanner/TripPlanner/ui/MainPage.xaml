@@ -9,15 +9,7 @@
     xmlns:model="using:TripPlanner.Model"
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-
-        <Pivot Grid.Row="0" Style="{StaticResource DefaultPivotStyle}" x:Name="MainPivot" SelectionChanged="MainPivot_OnSelectionChanged">
+        <Pivot  Style="{StaticResource DefaultPivotStyle}" x:Name="MainPivot" SelectionChanged="MainPivot_OnSelectionChanged">
             <PivotItem>
                 <PivotItem.Header>
                     <custom:TripPivotItem Title="Home" Glyph="&#xE80F;"/>
@@ -44,5 +36,5 @@
                 </PivotItem.Header>
             </PivotItem>
         </Pivot>
-    </Grid>
+    
 </Page>

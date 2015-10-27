@@ -42,6 +42,10 @@ namespace TripPlanner.ui
             Trip = e.Parameter as Trip;
             Bindings.Update();
         }
-        
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
