@@ -17,9 +17,9 @@ namespace TripPlanner.Model
             set { name = value; NotifyPropertyChanged("Name"); }
         }
 
-        private bool isChecked;
+        private bool? isChecked;
 
-        public bool IsChecked
+        public bool? IsChecked
         {
             get { return isChecked; }
             set { isChecked = value; NotifyPropertyChanged("Checked"); }

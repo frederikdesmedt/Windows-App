@@ -17,13 +17,13 @@
         </Grid.RowDefinitions>
 
 
-        <Pivot Grid.Row="0" Style="{StaticResource DefaultPivotStyle}">
+        <Pivot Grid.Row="0" Style="{StaticResource DefaultPivotStyle}" x:Name="MainPivot" SelectionChanged="MainPivot_OnSelectionChanged">
             <PivotItem>
                 <PivotItem.Header>
                     <custom:TripPivotItem Title="Home" Glyph="&#xE80F;"/>
                 </PivotItem.Header>
 
-                <ListView ItemsSource="{Binding}" HorizontalAlignment="Stretch" Margin="0 20 0 0" x:Name="TripList">
+                <ListView SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" HorizontalAlignment="Stretch" Margin="0 20 0 0" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Left"/>

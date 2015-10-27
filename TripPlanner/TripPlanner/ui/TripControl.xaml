@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Orientation="Horizontal" RightTapped="OnTripHolding" Tapped="Trip_OnTapped">
+    <StackPanel Orientation="Horizontal" RightTapped="OnTripHolding">
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem Text="&#xE104; Edit" FontFamily="Segoe UI Symbol" Click="MenuEdit_OnClick"/>
