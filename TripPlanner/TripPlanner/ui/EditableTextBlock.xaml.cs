@@ -57,7 +57,7 @@ namespace TripPlanner.ui
         }
 
         private readonly ColoredGlyph _editGlyph = new ColoredGlyph() { Glyph = "\uE104", Color = Colors.White };
-        private readonly ColoredGlyph _closeGlyph = new ColoredGlyph() { Glyph = "\uE106", Color = Colors.Red };
+        private readonly ColoredGlyph _closeGlyph = new ColoredGlyph() { Glyph = "\uE10B", Color = Colors.LightGreen };
         #endregion
 
         #region Events

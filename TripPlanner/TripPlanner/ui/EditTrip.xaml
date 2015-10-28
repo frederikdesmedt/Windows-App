@@ -14,6 +14,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <local:EditableTextBlock IsEditable="True" Text="{x:Bind Trip.Name, Mode=TwoWay }" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <local:EditableTextBlock Grid.Column="0" IsEditable="True" Text="{x:Bind Trip.Name, Mode=TwoWay }" />
     </Grid>
 </Page>
