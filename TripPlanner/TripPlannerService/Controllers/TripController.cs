@@ -4,23 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using TripPlannerService.App_Start;
 using TripPlannerService.Models;
 
 namespace TripPlannerService.Controllers
 {
+    [Authorize]
     public class TripController : ApiController
     {
         private TripContext dbContext;
 
         public IEnumerable<Trip> Trips = new List<Trip>
         {
-            new Trip() { Title = "First trip", Items = new List<Item>
+            new Trip() { Title = "First trip", UserEmail = "frederik.de.smedt@hotmail.com", Items = new List<Item>
             {
                 new Item {IsChecked = true, Name = "Sleeping bag", Priority = 100},
                 new Item {IsChecked = false, Name = "Pants", Priority = 80}
             }},
-            new Trip() { Title = "Second trip", Items = new List<Item>
+            new Trip() { Title = "Second trip", UserEmail = "brent.couck@gmail.com", Items = new List<Item>
             {
                 new Item {IsChecked = false, Name = "Bed", Priority = 100},
                 new Item {IsChecked = true, Name = "Trousers", Priority = 80}
@@ -39,7 +41,10 @@ namespace TripPlannerService.Controllers
         
         public IEnumerable<Trip> GetAllTrips()
         {
-            return dbContext.Trips;
+            string email = User.Identity.Name;
+            return from trip in dbContext.Trips
+                   where trip.UserEmail == email
+                   select trip;
         }
     }
 }

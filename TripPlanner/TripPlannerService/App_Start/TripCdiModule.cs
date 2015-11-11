@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Ninject.Modules;
 
-namespace TripPlannerService.App_Start
+namespace TripPlannerService
 {
     public class TripCdiModule : NinjectModule
     {

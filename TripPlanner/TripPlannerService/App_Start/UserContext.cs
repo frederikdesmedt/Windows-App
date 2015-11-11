@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 using TripPlannerService.Models;
 
-namespace TripPlannerService
+namespace TripPlannerService.App_Start
 {
-    public class TripContext : DbContext
+    public class UserContext : DbContext
     {
-        public virtual DbSet<Trip> Trips { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

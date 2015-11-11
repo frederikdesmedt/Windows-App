@@ -13,6 +13,7 @@ namespace TripPlannerService.Models
         public string Title { get; set; }
         public string Icon { get; set; }
         public IEnumerable<Item> Items { get; set; }
+        public string UserEmail { get; set; }
         public DateTime Date;
         public DbGeography Location;
     }
