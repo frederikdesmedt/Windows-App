@@ -29,8 +29,6 @@ namespace TripPlanner
     public sealed partial class MainPage : Page
     {
 
-        private List<PivotItem> TempItems = new List<PivotItem>(); 
-
         public MainPage()
         {
             this.InitializeComponent();
@@ -40,16 +38,9 @@ namespace TripPlanner
 
         public TripList CurrentTripList { get; set; }
 
-        public void OpenDetails(Trip trip)
+        public void OpenDetails(TripViewModel trip)
         {
-            PivotItem item = new PivotItem
-            {
-                Content = new TripView(trip, this)
-            };
-
-            MainPivot.Items?.Add(item);
-            MainPivot.SelectedItem = item;
-            TempItems.Add(item);
+            TripContent.Content = new TripView(trip);
         }
 
         public void OpenEditor(Trip trip)
@@ -58,10 +49,6 @@ namespace TripPlanner
             {
                 Content = new EditTrip(trip)
             };
-
-            MainPivot.Items?.Add(item);
-            MainPivot.SelectedItem = item;
-            TempItems.Add(item);
         }
 
         public void OpenMainPage()
@@ -72,27 +59,11 @@ namespace TripPlanner
 
         private void TripList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Trip trip = e.AddedItems.First() as Trip;
+            TripViewModel trip = e.AddedItems.First() as TripViewModel;
 
             if (trip != null)
             {
                 OpenDetails(trip);
-            }
-        }
-
-        private void MainPivot_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            foreach (var item in e.AddedItems)
-            {
-                if (!TempItems.Contains(item))
-                {
-                    foreach (PivotItem pivotItem in TempItems)
-                    {
-                        MainPivot.Items?.Remove(pivotItem);
-                    }
-
-                    TempItems.Clear();
-                }
             }
         }
     }

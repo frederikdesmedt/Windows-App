@@ -1,46 +1,43 @@
-﻿<Page
+﻿<UserControl
     x:Class="TripPlanner.ui.TripView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:TripPlanner.Model"
+    xmlns:ui="using:TripPlanner.ui"
+    xmlns:system="using:System"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <Style TargetType="CommandBar" x:Key="commandBarStyle">
-            <Setter Property="Background" Value="#2C75D3" />
-        </Style>
-    </Page.Resources>
+    <RelativePanel>
+        <Grid RelativePanel.AlignTopWithPanel="True" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="{Binding Trip.Name, Mode=OneWay}" FontSize="36" />
+            <ListView ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border HorizontalAlignment="Stretch">
+                            <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                <CheckBox.Content>
+                                    <ui:EditableTextBlock Text="{Binding Name, Mode=OneWay}" IsEditable="{Binding IsEditable, ElementName=_trip, Mode=OneWay}"/>
+                                </CheckBox.Content>    
+                            </CheckBox>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
-    <Page.BottomAppBar>
-        <CommandBar Style="{StaticResource commandBarStyle}">
+        <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
             <AppBarButton Label="Edit" Click="ButtonBase_OnClick" Icon="Edit"/>
         </CommandBar>
-    </Page.BottomAppBar>
-
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Text="{x:Bind Trip.Name, Mode=OneWay}" FontSize="36" />
-        <ListView ItemsSource="{x:Bind Trip.ItemList}" Grid.Row="1" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" /> 
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:Item">
-                    <Border HorizontalAlignment="Stretch">
-                        <CheckBox Content="{x:Bind Name, Mode=OneWay}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
-        </ListView>
-    </Grid>
-    
-    
-</Page>
+    </RelativePanel>
+</UserControl>

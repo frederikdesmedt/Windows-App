@@ -7,34 +7,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:custom="using:TripPlanner.ui"
     xmlns:model="using:TripPlanner.Model"
+    xmlns:viewModel="using:TripPlanner.ViewModel"
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
-        <Pivot  Style="{StaticResource DefaultPivotStyle}" x:Name="MainPivot" SelectionChanged="MainPivot_OnSelectionChanged">
-            <PivotItem>
-                <PivotItem.Header>
-                    <custom:TripPivotItem Title="Home" Glyph="&#xE80F;"/>
-                </PivotItem.Header>
+    <Page.TopAppBar>
+        <CommandBar Style="{StaticResource CommandBarStyle}" FontSize="50">
+            <AppBarButton Label="Home" Icon="Home"></AppBarButton>
+        </CommandBar>
+    </Page.TopAppBar>
 
-                <ListView SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" HorizontalAlignment="Stretch" Margin="0 20 0 0" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+    <SplitView CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline">
+        <SplitView.Pane>
+            <ListView SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" HorizontalAlignment="Stretch" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Trip">
-                            <custom:TripControl Trip="{x:Bind Path=Self}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <custom:TripPivotItem Title="Calendar" Glyph="&#xE787;"/>
-                </PivotItem.Header>
-            </PivotItem>
-        </Pivot>
-    
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModel:TripViewModel">
+                        <custom:TripControl Trip="{x:Bind Path=Self}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </SplitView.Pane>
+        <ContentControl x:Name="TripContent" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+    </SplitView>
 </Page>

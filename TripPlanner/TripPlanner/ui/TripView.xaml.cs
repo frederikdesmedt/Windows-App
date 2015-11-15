@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.Model;
+using TripPlanner.ViewModel;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,32 +23,38 @@ namespace TripPlanner.ui
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class TripView : Page
+    public sealed partial class TripView : UserControl
     {
 
-        private Trip Trip { get; set; }
-        private MainPage MainPage { get; set; }
+        private TripViewModel _trip;
+
+        private TripViewModel Trip
+        {
+            get { return _trip; }
+            set { _trip = value;
+                DataContext = value;
+            }
+        }
+
         public TripView()
         {
             this.InitializeComponent();
         }
 
-        public TripView(Trip trip, MainPage main) : this()
+        public TripView(TripViewModel trip) : this()
         {
             Trip = trip;
-            MainPage = main;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            Trip = e.Parameter as Trip;
-            Bindings.Update();
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    Trip = e.Parameter as Trip;
+        //}
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            MainPage.OpenEditor(Trip);
+            Trip.IsEditable = true;
         }
     }
 }

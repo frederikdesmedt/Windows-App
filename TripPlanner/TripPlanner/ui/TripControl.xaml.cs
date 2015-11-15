@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.Model;
 using System.Diagnostics;
+using TripPlanner.ViewModel;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -27,11 +28,11 @@ namespace TripPlanner.ui
             
         }
 
-        public static DependencyProperty TripProp = DependencyProperty.Register("Trip", typeof(Trip), typeof(TripControl), null);
+        public static DependencyProperty TripProp = DependencyProperty.Register("Trip", typeof(TripViewModel), typeof(TripControl), null);
 
-        public Trip Trip
+        public TripViewModel Trip
         {
-            get { return GetValue(TripProp) as Trip; }
+            get { return GetValue(TripProp) as TripViewModel; }
             set
             {
                 SetValue(TripProp, value);
@@ -49,13 +50,13 @@ namespace TripPlanner.ui
 
         private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Editing trip " + Trip.Name);
+            Debug.WriteLine("Editing trip " + Trip.Trip.Name);
             //Trip_OnTapped(sender, null);
         }
 
         private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Deleting trip " + Trip.Name);
+            Debug.WriteLine("Deleting trip " + Trip.Trip.Name);
         }
 
         //private void Trip_OnTapped(object sender, TappedRoutedEventArgs e)

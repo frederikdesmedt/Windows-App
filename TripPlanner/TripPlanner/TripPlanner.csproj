@@ -123,6 +123,7 @@
       <DependentUpon>TripPivotItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\TripList.cs" />
+    <Compile Include="ViewModel\TripViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

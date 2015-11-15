@@ -8,14 +8,14 @@ using TripPlanner.Model;
 
 namespace TripPlanner.ViewModel
 {
-    public class TripList : ObservableCollection<Trip>
+    public class TripList : ObservableCollection<TripViewModel>
     {
 
         public TripList()
         {
-            Add(new Trip("First trip", "\uE1C4"));
-            Add(new Trip("Second trip", "\uE1C3"));
-            Add(new Trip("Third trip", "\uE129"));
+            Add(new TripViewModel(new Trip("First trip", "\uE1C4")));
+            Add(new TripViewModel(new Trip("Second trip", "\uE1C3")));
+            Add(new TripViewModel(new Trip("Third trip", "\uE129")));
         }
     }
 }

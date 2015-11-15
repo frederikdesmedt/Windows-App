@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-
+    
     <StackPanel Orientation="Horizontal" RightTapped="OnTripHolding">
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout>
@@ -18,7 +18,7 @@
             </MenuFlyout>
         </FlyoutBase.AttachedFlyout>
         
-        <FontIcon Glyph="{x:Bind Trip.Icon}" Margin="0 0 10 0"/>
-        <TextBlock Foreground="White" Text="{x:Bind Trip.Name, Mode=OneWay}"/>
+        <FontIcon Glyph="{x:Bind Trip.Trip.Icon}" Margin="0 0 10 0"/>
+        <TextBlock Foreground="White" Text="{x:Bind Trip.Trip.Name, Mode=OneWay}"/>
     </StackPanel>
 </UserControl>
