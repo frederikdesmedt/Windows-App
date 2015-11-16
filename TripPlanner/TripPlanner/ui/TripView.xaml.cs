@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -28,7 +29,7 @@ namespace TripPlanner.ui
 
         private TripViewModel _trip;
 
-        private TripViewModel Trip
+        public TripViewModel Trip
         {
             get { return _trip; }
             set { _trip = value;
@@ -54,7 +55,7 @@ namespace TripPlanner.ui
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Trip.IsEditable = true;
+            Trip.IsEditable = !Trip.IsEditable;
         }
     }
 }

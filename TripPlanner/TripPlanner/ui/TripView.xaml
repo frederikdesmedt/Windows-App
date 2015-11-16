@@ -7,7 +7,9 @@
     xmlns:model="using:TripPlanner.Model"
     xmlns:ui="using:TripPlanner.ui"
     xmlns:system="using:System"
-    mc:Ignorable="d">
+    xmlns:viewModel="using:TripPlanner.ViewModel"
+    mc:Ignorable="d"
+    Name="UcTripView">
 
     <RelativePanel>
         <Grid RelativePanel.AlignTopWithPanel="True" Padding="10">
@@ -27,7 +29,7 @@
                         <Border HorizontalAlignment="Stretch">
                             <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=TwoWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                 <CheckBox.Content>
-                                    <ui:EditableTextBlock Text="{Binding Name, Mode=OneWay}" IsEditable="{Binding IsEditable, ElementName=_trip, Mode=OneWay}"/>
+                                    <ui:EditableTextBlock Text="{Binding Name, Mode=OneWay}" IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=TwoWay}"/>
                                 </CheckBox.Content>    
                             </CheckBox>
                         </Border>

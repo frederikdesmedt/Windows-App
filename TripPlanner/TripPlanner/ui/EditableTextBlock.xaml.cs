@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,14 +21,28 @@ using Windows.UI.Xaml.Navigation;
 
 namespace TripPlanner.ui
 {
-    public sealed partial class EditableTextBlock : UserControl
+    public sealed partial class EditableTextBlock : UserControl, INotifyPropertyChanged
     {
 
         #region Properties
 
         public static DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(EditableTextBlock), null);
-        public static DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), null);
-        public static DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock), null);
+        public static DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
+            (o, args) =>
+            {
+                var etb = o as EditableTextBlock;
+                etb?.OnIsEditableChanged?.Invoke(etb.IsEditable);
+                etb?.NotifyPropertyChanged(nameof(IsEditable));
+            }));
+
+
+        public static DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
+            (o, args) =>
+            {
+                var etb = o as EditableTextBlock;
+                etb?.OnIsEditableChanged?.Invoke(etb.IsEditing);
+                etb?.NotifyPropertyChanged(nameof(IsEditing));
+            }));
 
         public string Text
         {
@@ -37,13 +53,13 @@ namespace TripPlanner.ui
         public bool IsEditable
         {
             get { return (bool) GetValue(IsEditableProperty); }
-            set { SetValue(IsEditableProperty, value); OnIsEditableChanged?.Invoke(IsEditable); }
+            set { SetValue(IsEditableProperty, value); OnIsEditableChanged?.Invoke(IsEditable); NotifyPropertyChanged(nameof(IsEditable)); }
         }
 
         public bool IsEditing
         {
             get { return (bool)GetValue(IsEditingProperty); }
-            set { SetValue(IsEditingProperty, value); OnIsEditingChanged?.Invoke(IsEditing); }
+            set { SetValue(IsEditingProperty, value); OnIsEditingChanged?.Invoke(IsEditing); NotifyPropertyChanged(nameof(IsEditing)); }
         }
 
         private ColoredGlyph CurrentGlyph { get; set; }
@@ -70,6 +86,13 @@ namespace TripPlanner.ui
         public event OnIsEditableChangedHandler OnIsEditableChanged;
         public event OnIsEditingChangedHandler OnIsEditingChanged;
         public event OnTextChangedHandler OnTextChanged;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
 
         private readonly HyperlinkButton _actionButton = new HyperlinkButton();

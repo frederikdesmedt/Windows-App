@@ -18,6 +18,6 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <local:EditableTextBlock Grid.Column="0" IsEditable="True" Text="{x:Bind Trip.Name, Mode=TwoWay }" />
+        <local:EditableTextBlock Grid.Column="0" IsEditable="True" Text="{ x:Bind Trip.Name, Mode=TwoWay }" />
     </Grid>
 </Page>
