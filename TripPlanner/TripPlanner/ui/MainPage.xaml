@@ -16,23 +16,55 @@
         </CommandBar>
     </Page.TopAppBar>
 
-    <SplitView CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline">
-        <SplitView.Pane>
-            <ListView SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" HorizontalAlignment="Stretch" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="viewModel:TripViewModel">
-                        <custom:TripControl Trip="{x:Bind Path=Self}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </SplitView.Pane>
-        <ContentControl x:Name="TripContent" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
-    </SplitView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ToggleMenuButton.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="MainSplit.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <HyperlinkButton x:Name="ToggleMenuButton" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource MainBackgroundBrush}" Click="OnToggleMenu" ClickMode="Release"/>
+
+        <SplitView Grid.Column="1" CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline" x:Name="MainSplit">
+            <SplitView.Pane>
+                <ListView HorizontalAlignment="Stretch" SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="viewModel:TripViewModel">
+                            <custom:TripControl Trip="{x:Bind Path=Self}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </SplitView.Pane>
+            <ContentControl x:Name="TripContent" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+        </SplitView>
+    </Grid>
 </Page>

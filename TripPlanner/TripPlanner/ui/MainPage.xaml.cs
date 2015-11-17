@@ -64,7 +64,13 @@ namespace TripPlanner
             if (trip != null)
             {
                 OpenDetails(trip);
+                MainSplit.IsPaneOpen = false;
             }
+        }
+
+        private void OnToggleMenu(object sender, RoutedEventArgs e)
+        {
+            MainSplit.IsPaneOpen = true;
         }
     }
 }

@@ -38,7 +38,7 @@
             </ListView>
         </Grid>
 
-        <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
+        <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
             <AppBarButton Label="Edit" Click="ButtonBase_OnClick" Icon="Edit"/>
         </CommandBar>
     </RelativePanel>
