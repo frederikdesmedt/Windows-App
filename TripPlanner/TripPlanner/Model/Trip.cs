@@ -43,7 +43,6 @@ namespace TripPlanner.Model
 
         public Trip()
         {
-            itemList.Add(new Item("Een item", 10));
         }
 
         public Trip(string name) : this()

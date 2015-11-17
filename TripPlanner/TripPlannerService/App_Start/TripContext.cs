@@ -9,6 +9,7 @@ namespace TripPlannerService
 {
     public class TripContext : DbContext
     {
-        public virtual DbSet<Trip> Trips { get; set; }
+        public DbSet<Trip> Trips { get; set; }
+        public DbSet<Item> Items { get; set; }
     }
 }

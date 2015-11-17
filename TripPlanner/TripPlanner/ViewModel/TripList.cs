@@ -11,11 +11,12 @@ namespace TripPlanner.ViewModel
     public class TripList : ObservableCollection<TripViewModel>
     {
 
-        public TripList()
+        public async void Load()
         {
-            Add(new TripViewModel(new Trip("First trip", "\uE1C4")));
-            Add(new TripViewModel(new Trip("Second trip", "\uE1C3")));
-            Add(new TripViewModel(new Trip("Third trip", "\uE129")));
+            foreach (TripViewModel trip in (await Backend.Local.GetTrips()).Select(t => new TripViewModel(t)))
+            {
+                Add(trip);
+            }
         }
     }
 }

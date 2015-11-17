@@ -8,6 +8,7 @@ using TripPlanner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Input;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +35,21 @@ namespace TripPlanner
             this.InitializeComponent();
             CurrentTripList = new TripList();
             DataContext = CurrentTripList;
+            LoginAndLoadData();
+        }
+
+        private async void LoginAndLoadData()
+        {
+            Backend.BackendResponse re = await Backend.Local.Login("test@outlook.com", "Bl@123");
+            if (re == Backend.BackendResponse.Ok)
+            {
+                CurrentTripList.Load();
+                await new MessageDialog($"Logged in as {Backend.Local.Username}").ShowAsync();
+            }
+            else
+            {
+                await new MessageDialog("Couldn't log in").ShowAsync();
+            }
         }
 
         public TripList CurrentTripList { get; set; }

@@ -32,6 +32,10 @@ namespace TripPlanner.Model
             set { priority = value; NotifyPropertyChanged("Priority"); }
         }
 
+        public Item()
+        {
+        }
+
         public Item(string name, int priority, bool isChecked = false)
         {
             Name = name;

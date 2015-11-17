@@ -49,7 +49,7 @@
 
         <SplitView Grid.Column="1" CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline" x:Name="MainSplit">
             <SplitView.Pane>
-                <ListView HorizontalAlignment="Stretch" SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList}" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
+                <ListView HorizontalAlignment="Stretch" SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList, Mode=OneWay}" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Left"/>
