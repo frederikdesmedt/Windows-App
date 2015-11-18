@@ -8,6 +8,7 @@
     xmlns:ui="using:TripPlanner.ui"
     xmlns:system="using:System"
     xmlns:viewModel="using:TripPlanner.ViewModel"
+   
     mc:Ignorable="d"
     Name="UcTripView">
 
@@ -35,11 +36,16 @@
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+                
             </ListView>
+            
         </Grid>
 
         <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+            <AppBarButton Label="Map"  Icon="Map"/>
             <AppBarButton Label="Edit" Click="ButtonBase_OnClick" Icon="Edit"/>
+            
         </CommandBar>
+        
     </RelativePanel>
 </UserControl>
