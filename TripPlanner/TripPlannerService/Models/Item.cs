@@ -13,5 +13,10 @@ namespace TripPlannerService.Models
         public string Name { get; set; }
         public bool IsChecked { get; set; }
         public int Priority { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return Id == (obj as Item)?.Id;
+        }
     }
 }

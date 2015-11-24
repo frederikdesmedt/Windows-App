@@ -104,9 +104,6 @@
     <Compile Include="ui\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui\EditTrip.xaml.cs">
-      <DependentUpon>EditTrip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ui\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -148,10 +145,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="ui\EditableTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ui\EditTrip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

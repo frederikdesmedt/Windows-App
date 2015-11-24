@@ -10,10 +10,12 @@ namespace TripPlannerService.Models
     public class Trip
     {
         public int Id { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Icon { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
+        [Required]
         public string UserEmail { get; set; }
         public DateTime Date;
         public DbGeography Location;

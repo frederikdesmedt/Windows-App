@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
@@ -53,9 +54,31 @@ namespace TripPlanner.ui
         //    Trip = e.Parameter as Trip;
         //}
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void OnEdit(object sender, RoutedEventArgs e)
         {
             Trip.IsEditable = !Trip.IsEditable;
+        }
+
+        private async void ItemUpdated(bool isEditing, Item item)
+        {
+            // Update if not editing
+            if (!isEditing)
+            {
+                await Backend.Local.SaveItem(item, Trip.Trip);
+            }
+        }
+
+        private async void OnItemToggle(object sender, RoutedEventArgs e)
+        {
+            Item checkedItem = ((FrameworkElement) sender).DataContext as Item;
+            CheckBox usedCheckBox = (CheckBox) e.OriginalSource;
+
+            if (checkedItem?.IsChecked != null && usedCheckBox.IsChecked.HasValue && checkedItem.IsChecked.Value != usedCheckBox.IsChecked.Value)
+            {
+                checkedItem.IsChecked = !checkedItem.IsChecked.Value;
+                usedCheckBox.IsChecked = checkedItem.IsChecked.Value;
+                await Backend.Local.UpdateItemChecked(checkedItem);
+            }
         }
     }
 }

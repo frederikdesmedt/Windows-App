@@ -11,7 +11,7 @@ namespace TripPlanner.ViewModel
     public class TripList : ObservableCollection<TripViewModel>
     {
 
-        public async void Load()
+        public async Task Load()
         {
             foreach (TripViewModel trip in (await Backend.Local.GetTrips()).Select(t => new TripViewModel(t)))
             {

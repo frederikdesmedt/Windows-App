@@ -40,6 +40,7 @@
 
                     <VisualState.Setters>
                         <Setter Target="MainSplit.DisplayMode" Value="Overlay"/>
+                        <Setter Target="MainSplit.IsPaneOpen" Value="True"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

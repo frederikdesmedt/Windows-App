@@ -11,6 +11,8 @@ namespace TripPlanner.Model
     {
         private string name = "";
 
+        public int Id { get; private set; }
+
         public string Name
         {
             get { return name; }
@@ -34,6 +36,11 @@ namespace TripPlanner.Model
 
         public Item()
         {
+        }
+
+        public Item(int id)
+        {
+            Id = id;
         }
 
         public Item(string name, int priority, bool isChecked = false)

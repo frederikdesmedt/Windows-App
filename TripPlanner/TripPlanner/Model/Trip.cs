@@ -10,15 +10,21 @@ using Windows.Graphics.Printing.OptionDetails;
 using Windows.UI.Notifications;
 using TripPlanner.Annotations;
 using Windows.UI.Xaml;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace TripPlanner.Model
 {
     public class Trip : INotifyPropertyChanged, ISelfRepresentable<Trip>
     {
+        [JsonIgnore]
         public Trip Self => this;
+
+        public int Id { get; private set; }
 
         private ObservableCollection<Item> itemList = new ObservableCollection<Item>();
 
+        [JsonProperty("Items")]
         public ObservableCollection<Item> ItemList
         {
             get { return itemList; }
@@ -27,6 +33,7 @@ namespace TripPlanner.Model
 
         private string name = "";
 
+        [JsonProperty("Title")]
         public string Name
         {
             get { return name; }
@@ -43,6 +50,11 @@ namespace TripPlanner.Model
 
         public Trip()
         {
+        }
+
+        public Trip(int id) : this()
+        {
+            Id = id;
         }
 
         public Trip(string name) : this()

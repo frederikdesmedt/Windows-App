@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using TripPlanner.Model;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -26,7 +28,7 @@ namespace TripPlanner.ui
 
         #region Properties
 
-        public static DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(EditableTextBlock), null);
+        public static DependencyProperty ItemProperty = DependencyProperty.Register("Item", typeof(Item), typeof(EditableTextBlock), null);
         public static DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
             (o, args) =>
             {
@@ -40,26 +42,26 @@ namespace TripPlanner.ui
             (o, args) =>
             {
                 var etb = o as EditableTextBlock;
-                etb?.OnIsEditableChanged?.Invoke(etb.IsEditing);
+                etb?.OnIsEditingChanged?.Invoke(etb.IsEditing, etb.Item);
                 etb?.NotifyPropertyChanged(nameof(IsEditing));
             }));
 
-        public string Text
+        public Item Item
         {
-            get { return GetValue(TextProperty) as string; }
-            set { SetValue(TextProperty, value); }
+            get { return GetValue(ItemProperty) as Item; }
+            set { SetValue(ItemProperty, value); }
         }
 
         public bool IsEditable
         {
             get { return (bool) GetValue(IsEditableProperty); }
-            set { SetValue(IsEditableProperty, value); OnIsEditableChanged?.Invoke(IsEditable); NotifyPropertyChanged(nameof(IsEditable)); }
+            set { SetValue(IsEditableProperty, value); }
         }
 
         public bool IsEditing
         {
             get { return (bool)GetValue(IsEditingProperty); }
-            set { SetValue(IsEditingProperty, value); OnIsEditingChanged?.Invoke(IsEditing); NotifyPropertyChanged(nameof(IsEditing)); }
+            set { SetValue(IsEditingProperty, value); }
         }
 
         private ColoredGlyph CurrentGlyph { get; set; }
@@ -77,15 +79,15 @@ namespace TripPlanner.ui
         #endregion
 
         #region Events
-        public delegate void OnIsEditableChangedHandler(bool isEditable);
+        public delegate void IsEditableChangedDelegate(bool isEditable);
 
-        public delegate void OnIsEditingChangedHandler(bool isEditing);
+        public delegate void IsEditingChangedDelegate(bool isEditing, Item item);
 
-        public delegate void OnTextChangedHandler();
+        public delegate void OnTextChangedDelegate();
 
-        public event OnIsEditableChangedHandler OnIsEditableChanged;
-        public event OnIsEditingChangedHandler OnIsEditingChanged;
-        public event OnTextChangedHandler OnTextChanged;
+        public event IsEditableChangedDelegate OnIsEditableChanged;
+        public event IsEditingChangedDelegate OnIsEditingChanged;
+        public event OnTextChangedDelegate OnTextChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -119,7 +121,7 @@ namespace TripPlanner.ui
             MainGrid.Children.Add(_actionButton);
 
             //Warm up events
-            OnIsEditingChanged?.Invoke(IsEditing);
+            OnIsEditingChanged?.Invoke(IsEditing, GetValue(ItemProperty) as Item);
             OnIsEditableChanged?.Invoke(IsEditable);
         } 
         #endregion
@@ -131,7 +133,7 @@ namespace TripPlanner.ui
             _actionButton.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void _OnIsEditingChanged(bool isEditing)
+        private void _OnIsEditingChanged(bool isEditing, Item item)
         {
             UpdateGlyph();
             if (_leftSide != null) MainGrid.Children.Remove(_leftSide);
@@ -143,7 +145,7 @@ namespace TripPlanner.ui
                 box.SetBinding(TextBox.TextProperty, new Binding()
                 {
                     Source = this,
-                    Path = new PropertyPath("Text"),
+                    Path = new PropertyPath("Item.Name"),
                     Mode = BindingMode.TwoWay
                 });
                 _leftSide = box;
@@ -155,7 +157,7 @@ namespace TripPlanner.ui
                 block.SetBinding(TextBlock.TextProperty, new Binding()
                 {
                     Source = this,
-                    Path = new PropertyPath("Text"),
+                    Path = new PropertyPath("Item.Name"),
                     Mode = BindingMode.OneWay
                 });
                 _leftSide = block;
@@ -187,7 +189,6 @@ namespace TripPlanner.ui
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             IsEditing = !IsEditing;
-            OnIsEditingChanged?.Invoke(IsEditing);
         }
     }
 }

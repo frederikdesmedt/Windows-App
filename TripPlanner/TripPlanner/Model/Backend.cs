@@ -8,8 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web.Provider;
+using Windows.Security.Credentials;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TripPlanner.ViewModel;
 
 namespace TripPlanner.Model
 {
@@ -35,6 +37,9 @@ namespace TripPlanner.Model
 
         public async Task<BackendResponse> Login(string username, string password)
         {
+            PasswordVault vault = new PasswordVault();
+
+            
             HttpWebRequest request = PopulateRequest(new Uri("/Token", UriKind.Relative), POST, "application/x-www-form-urlencoded");
             Task<Stream> outStream = request.GetRequestStreamAsync();
             FormUrlEncodedContent encodedContent = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
@@ -91,7 +96,8 @@ namespace TripPlanner.Model
                 List<Trip> trips = new List<Trip>();
                 foreach (var trip in deserializedObject)
                 {
-                    Trip legalTrip = new Trip()
+                    int tripId = trip.Id;
+                    Trip legalTrip = new Trip(tripId)
                     {
                         Icon = trip.Icon,
                         Name = trip.Title
@@ -99,7 +105,8 @@ namespace TripPlanner.Model
 
                     foreach (var item in trip.Items)
                     {
-                        legalTrip.ItemList.Add(new Item
+                        int itemId = item.Id;
+                        legalTrip.ItemList.Add(new Item(itemId)
                         {
                             Name = item.Name,
                             Priority = item.Priority,
@@ -112,7 +119,44 @@ namespace TripPlanner.Model
 
                 return trips;
             }
-        } 
+        }
+
+        public Task SaveTrip(TripViewModel tripViewModel)
+        {
+            return SaveTrip(tripViewModel.Trip);
+        }
+
+        public async Task SaveTrip(Trip trip)
+        {
+            HttpWebRequest request = PopulateRequest(new Uri("/api/Trip/Save/Trip", UriKind.Relative), POST);
+            Task<Stream> outStream = request.GetRequestStreamAsync();
+            using (StreamWriter writer = new StreamWriter(await outStream))
+            {
+                await writer.WriteAsync(JsonConvert.SerializeObject(trip));
+            }
+
+            await request.GetResponseAsync();
+        }
+
+        public async Task UpdateItemChecked(Item item)
+        {
+            int checkCode = item.IsChecked.HasValue && item.IsChecked.Value ? 1 : 0;
+            HttpWebRequest request = PopulateRequest(new Uri($"api/Trip/Check/{item.Id}/{checkCode}", UriKind.Relative), POST);
+            await request.GetResponseAsync();
+        }
+
+        public async Task SaveItem(Item item, Trip containingTrip)
+        {
+            HttpWebRequest request = PopulateRequest(new Uri($"/api/Trip/Save/{containingTrip.Id}/Item", UriKind.Relative), POST);
+            Task<Stream> outStream = request.GetRequestStreamAsync();
+            using (StreamWriter writer = new StreamWriter(await outStream))
+            {
+                string data = JsonConvert.SerializeObject(item);
+                await writer.WriteAsync(data);
+            }
+
+            await request.GetResponseAsync();
+        }
 
         private HttpWebRequest PopulateRequest(Uri relativeUri, string method, string contentType = "application/json")
         {

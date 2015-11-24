@@ -43,8 +43,9 @@ namespace TripPlanner
             Backend.BackendResponse re = await Backend.Local.Login("test@outlook.com", "Bl@123");
             if (re == Backend.BackendResponse.Ok)
             {
-                CurrentTripList.Load();
-                await new MessageDialog($"Logged in as {Backend.Local.Username}").ShowAsync();
+                var dialog = new MessageDialog($"Logged in as {Backend.Local.Username}").ShowAsync();
+                await CurrentTripList.Load();
+                await dialog;
             }
             else
             {
@@ -57,14 +58,6 @@ namespace TripPlanner
         public void OpenDetails(TripViewModel trip)
         {
             TripContent.Content = new TripView(trip);
-        }
-
-        public void OpenEditor(Trip trip)
-        {
-            PivotItem item = new PivotItem
-            {
-                Content = new EditTrip(trip)
-            };
         }
 
         public void OpenMainPage()
