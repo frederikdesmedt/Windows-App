@@ -66,12 +66,19 @@ namespace TripPlannerService.Controllers
             Trip trip = dbContext.Trips.Find(tripId);
             if (trip != null)
             {
+                bool foundExisting = false;
                 foreach (var existingItem in new List<Item>(trip.Items.Where(i => i.Id == item.Id)))
                 {
-                    trip.Items.Remove(existingItem);
+                    foundExisting = true;
+                    existingItem.IsChecked = item.IsChecked;
+                    existingItem.Name = item.Name;
+                    existingItem.Priority = item.Priority;
                 }
 
-                trip.Items.Add(item);
+                if (!foundExisting)
+                {
+                    trip.Items.Add(item);
+                }
                 dbContext.SaveChanges();
             }
             else
