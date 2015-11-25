@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -79,6 +80,12 @@ namespace TripPlanner.ui
                 usedCheckBox.IsChecked = checkedItem.IsChecked.Value;
                 await Backend.Local.UpdateItemChecked(checkedItem);
             }
+        }
+
+
+        private void OnDelete(object sender, RoutedEventArgs e)
+        {
+            Trip.IsRemoving = !Trip.IsRemoving;
         }
     }
 }

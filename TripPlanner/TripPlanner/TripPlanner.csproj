@@ -104,6 +104,7 @@
     <Compile Include="ui\AddTripView.xaml.cs">
       <DependentUpon>AddTripView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\CustomCheckBox.cs" />
     <Compile Include="ui\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
