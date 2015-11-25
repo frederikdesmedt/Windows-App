@@ -37,6 +37,13 @@ namespace TripPlanner.ui
                 etb?.NotifyPropertyChanged(nameof(IsEditable));
             }));
 
+        public static DependencyProperty IsRemovableProperty = DependencyProperty.Register("IsRemovable", typeof (bool),
+            typeof (EditableTextBlock), new PropertyMetadata(false, (o, args) =>
+            {
+                var etb = o as EditableTextBlock;
+
+            }));
+
 
         public static DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
             (o, args) =>
@@ -64,6 +71,12 @@ namespace TripPlanner.ui
             set { SetValue(IsEditingProperty, value); }
         }
 
+        public bool IsRemovable
+        {
+            get { return (bool) GetValue(IsRemovableProperty); }
+            set { SetValue(IsRemovableProperty, value); }
+        }
+
         private ColoredGlyph CurrentGlyph { get; set; }
         #endregion
 
@@ -83,11 +96,14 @@ namespace TripPlanner.ui
 
         public delegate void IsEditingChangedDelegate(bool isEditing, Item item);
 
+        public delegate void IsRemovedDelegate(Item item);
+
         public delegate void OnTextChangedDelegate();
 
         public event IsEditableChangedDelegate OnIsEditableChanged;
         public event IsEditingChangedDelegate OnIsEditingChanged;
         public event OnTextChangedDelegate OnTextChanged;
+        public event IsRemovedDelegate Removed; 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -126,6 +142,10 @@ namespace TripPlanner.ui
         } 
         #endregion
 
+        private void _OnIsRemovableChanged(Item item)
+        {
+            
+        }
         
 
         private void _OnIsEditableChanged(bool isEditable)
