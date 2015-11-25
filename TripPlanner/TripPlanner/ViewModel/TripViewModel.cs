@@ -31,6 +31,14 @@ namespace TripPlanner.ViewModel
             set { _isEditable = value; OnPropertyChanged(nameof(IsEditable)); }
         }
 
+        private bool _isRemoving;
+
+        public bool IsRemoving
+        {
+            get { return _isRemoving; }
+            set { _isRemoving = value; OnPropertyChanged(nameof(IsRemoving)); }
+        }
+
         public TripViewModel(Trip trip, bool isEditable = false)
         {
             Trip = trip;

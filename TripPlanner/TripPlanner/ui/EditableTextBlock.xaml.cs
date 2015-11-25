@@ -37,11 +37,12 @@ namespace TripPlanner.ui
                 etb?.NotifyPropertyChanged(nameof(IsEditable));
             }));
 
-        public static DependencyProperty IsRemovableProperty = DependencyProperty.Register("IsRemovable", typeof (bool),
+        public static DependencyProperty IsRemovingProperty = DependencyProperty.Register("IsRemoving", typeof (bool),
             typeof (EditableTextBlock), new PropertyMetadata(false, (o, args) =>
             {
                 var etb = o as EditableTextBlock;
-
+                etb?.RemovingChanged?.Invoke(etb.IsRemoving, etb.Item);
+                etb?.NotifyPropertyChanged(nameof(IsRemoving));
             }));
 
 
@@ -71,10 +72,10 @@ namespace TripPlanner.ui
             set { SetValue(IsEditingProperty, value); }
         }
 
-        public bool IsRemovable
+        public bool IsRemoving
         {
-            get { return (bool) GetValue(IsRemovableProperty); }
-            set { SetValue(IsRemovableProperty, value); }
+            get { return (bool) GetValue(IsRemovingProperty); }
+            set { SetValue(IsRemovingProperty, value); }
         }
 
         private ColoredGlyph CurrentGlyph { get; set; }
@@ -89,6 +90,7 @@ namespace TripPlanner.ui
 
         private readonly ColoredGlyph _editGlyph = new ColoredGlyph() { Glyph = "\uE104", Color = Colors.White };
         private readonly ColoredGlyph _closeGlyph = new ColoredGlyph() { Glyph = "\uE10B", Color = Colors.LightGreen };
+        private readonly ColoredGlyph _deleteGlyph = new ColoredGlyph() { Glyph = "\uE107", Color = Colors.White };
         #endregion
 
         #region Events
@@ -100,10 +102,16 @@ namespace TripPlanner.ui
 
         public delegate void OnTextChangedDelegate();
 
+        public delegate void IsRemovableChangedDelegate(bool newValue, Item item);
+
         public event IsEditableChangedDelegate OnIsEditableChanged;
         public event IsEditingChangedDelegate OnIsEditingChanged;
+
         public event OnTextChangedDelegate OnTextChanged;
-        public event IsRemovedDelegate Removed; 
+
+        public event IsRemovedDelegate OnRemoved;
+
+        public event IsRemovableChangedDelegate RemovingChanged;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -132,25 +140,39 @@ namespace TripPlanner.ui
             _actionButton.Click += ButtonBase_OnClick;
             OnIsEditingChanged += _OnIsEditingChanged;
             OnIsEditableChanged += _OnIsEditableChanged;
+            RemovingChanged += _OnIsRemovableChanged;
 
             //Add components to page
             MainGrid.Children.Add(_actionButton);
-
+            
             //Warm up events
             OnIsEditingChanged?.Invoke(IsEditing, GetValue(ItemProperty) as Item);
             OnIsEditableChanged?.Invoke(IsEditable);
+            RemovingChanged?.Invoke(IsRemoving, GetValue(ItemProperty) as Item);
         } 
         #endregion
 
-        private void _OnIsRemovableChanged(Item item)
+        private void _OnIsRemovableChanged(bool newValue, Item item)
         {
-            
+            if (IsEditable)
+            {
+                return;
+            }
+
+            _actionButton.Visibility = newValue ? Visibility.Visible : Visibility.Collapsed;
+            UpdateGlyph();
         }
         
 
         private void _OnIsEditableChanged(bool isEditable)
         {
+            if (IsRemoving)
+            {
+                return;
+            }
+
             _actionButton.Visibility = isEditable ? Visibility.Visible : Visibility.Collapsed;
+            UpdateGlyph();
         }
 
         private void _OnIsEditingChanged(bool isEditing, Item item)
@@ -168,6 +190,7 @@ namespace TripPlanner.ui
                     Path = new PropertyPath("Item.Name"),
                     Mode = BindingMode.TwoWay
                 });
+                
                 _leftSide = box;
             }
             else
@@ -186,15 +209,18 @@ namespace TripPlanner.ui
             MainGrid.Children.Add(_leftSide);
         }
 
+
         private void UpdateGlyph()
         {
-            if (IsEditing)
+            if (IsRemoving)
             {
-                CurrentGlyph = _closeGlyph;
-            }
-            else
+                CurrentGlyph = _deleteGlyph;
+            } else if (IsEditable && !IsEditing)
             {
                 CurrentGlyph = _editGlyph;
+            } else if (IsEditable && IsEditing)
+            {
+                CurrentGlyph = _closeGlyph;
             }
 
             var fontIcon = _actionButton.Content as FontIcon;
@@ -208,7 +234,17 @@ namespace TripPlanner.ui
        
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            IsEditing = !IsEditing;
+            if (IsRemoving)
+            {
+                IsRemoving = false;
+                IsEditing = false;
+                IsEditable = false;
+                OnRemoved?.Invoke(GetValue(ItemProperty) as Item);
+            }
+            else
+            {
+                IsEditing = !IsEditing;
+            }
         }
     }
 }

@@ -24,10 +24,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border HorizontalAlignment="Stretch">
-                        <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="OnItemToggle">
+                        <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=OneWay}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="OnItemToggle">
                             <CheckBox.Content>
                                 <ui:EditableTextBlock Item="{Binding}" IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=TwoWay}" OnIsEditingChanged="ItemUpdated"
-                                                          HorizontalAlignment="Stretch"/>
+                                                          HorizontalAlignment="Stretch" IsRemoving="{Binding Trip.IsRemoving, ElementName=UcTripView, Mode=OneWay}" />
                             </CheckBox.Content>
                         </CheckBox>
                     </Border>
@@ -38,7 +38,7 @@
 
         <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
             <AppBarButton Label="Edit" Click="OnEdit" Icon="Edit"/>
-            <AppBarButton Label="Remove" Icon="Delete"/>
+            <AppBarButton Label="Remove" Icon="Delete" Click="OnDelete"/>
             <AppBarButton Label="Add" Icon="Add"/>
             <AppBarButton Label="Map"  Icon="Map"/>
         </CommandBar>
