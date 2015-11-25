@@ -29,6 +29,7 @@ namespace TripPlanner.Model
         private const string GET = "Get";
         private const string POST = "Post";
         private const string PUT = "Put";
+        private const string DELETE = "Delete";
 
         private string _authenticationToken = "";
         private string _authenticationTokenType = "";
@@ -155,6 +156,12 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(data);
             }
 
+            await request.GetResponseAsync();
+        }
+
+        public async Task RemoveItem(Item item)
+        {
+            HttpWebRequest request = PopulateRequest(new Uri($"/api/Trip/Remove/Item/{item.Id}", UriKind.Relative), DELETE);
             await request.GetResponseAsync();
         }
 
