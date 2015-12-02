@@ -13,6 +13,7 @@
     <Page.TopAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}" FontSize="50">
             <AppBarButton Label="Home" Icon="Home"></AppBarButton>
+            <AppBarButton Label="Map"  Icon="Map" Click="AppBarButton_Click"/>
         </CommandBar>
     </Page.TopAppBar>
 

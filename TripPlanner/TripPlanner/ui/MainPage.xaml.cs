@@ -57,11 +57,16 @@ namespace TripPlanner
             }
         }
 
+        public UserControl MainContent
+        {
+            set { TripContent.Content = value; }
+        }
+
         public TripList CurrentTripList { get; set; }
 
         public void OpenDetails(TripViewModel trip)
         {
-            TripContent.Content = new TripView(trip);
+            TripContent.Content = new TripView(this, trip);
         }
 
         public void OpenMainPage()
@@ -103,6 +108,11 @@ namespace TripPlanner
         private void OnToggleMenu(object sender, RoutedEventArgs e)
         {
             MainSplit.IsPaneOpen = true;
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

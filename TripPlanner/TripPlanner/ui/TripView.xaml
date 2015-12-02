@@ -14,6 +14,7 @@
 
     <RelativePanel>
         <TextBlock x:Name="TripTitle" Text="{Binding Trip.Name, Mode=OneWay}" FontSize="36" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" />
+        <AppBarButton Label="Navigate" Icon="Map" Click="AppBarButton_Click" RelativePanel.RightOf="TripTitle"/>
         <ListView x:Name="ItemList" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="TripTitle" ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -41,7 +42,7 @@
             <AppBarButton Label="Edit" Click="OnEdit" Icon="Edit"/>
             <AppBarButton Label="Remove" Icon="Delete" Click="OnDelete"/>
             <AppBarButton Label="Add" Icon="Add" Click="OnAdd"/>
-            <AppBarButton Label="Map"  Icon="Map"/>
+            
         </CommandBar>
     </RelativePanel>
 </UserControl>
