@@ -14,7 +14,7 @@
 
     <RelativePanel>
         <TextBlock x:Name="TripTitle" Text="{Binding Trip.Name, Mode=OneWay}" FontSize="36" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" />
-        <ListView RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="TripTitle" ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
+        <ListView x:Name="ItemList" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="TripTitle" ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -26,8 +26,9 @@
                     <Border HorizontalAlignment="Stretch">
                         <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=OneWay}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="OnItemToggle">
                             <CheckBox.Content>
-                                <ui:EditableTextBlock Item="{Binding}" IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=TwoWay}" OnIsEditingChanged="ItemUpdated"
-                                                          HorizontalAlignment="Stretch" IsRemoving="{Binding Trip.IsRemoving, ElementName=UcTripView, Mode=OneWay}" />
+                                <ui:EditableTextBlock Item="{Binding}" IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=OneWay}" OnIsEditingChanged="ItemUpdated"
+                                                          HorizontalAlignment="Stretch" IsRemoving="{Binding Trip.IsRemoving, ElementName=UcTripView, Mode=OneWay}" 
+                                                      OnRemoved="OnRemoved"/>
                             </CheckBox.Content>
                         </CheckBox>
                     </Border>
@@ -39,7 +40,7 @@
         <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
             <AppBarButton Label="Edit" Click="OnEdit" Icon="Edit"/>
             <AppBarButton Label="Remove" Icon="Delete" Click="OnDelete"/>
-            <AppBarButton Label="Add" Icon="Add"/>
+            <AppBarButton Label="Add" Icon="Add" Click="OnAdd"/>
             <AppBarButton Label="Map"  Icon="Map"/>
         </CommandBar>
     </RelativePanel>

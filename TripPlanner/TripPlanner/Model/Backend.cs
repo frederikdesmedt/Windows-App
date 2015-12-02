@@ -136,7 +136,14 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(JsonConvert.SerializeObject(trip));
             }
 
-            await request.GetResponseAsync();
+            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            {
+                if (trip.Id == 0)
+                {
+                    var responseData = await response.ReadToEndAsync();
+                    trip.Id = int.Parse(responseData);
+                }
+            }
         }
 
         public async Task UpdateItemChecked(Item item)
@@ -156,7 +163,14 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(data);
             }
 
-            await request.GetResponseAsync();
+            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            {
+                if (item.Id == 0)
+                {
+                    var responseData = await response.ReadToEndAsync();
+                    item.Id = int.Parse(responseData);
+                }
+            }
         }
 
         public async Task RemoveItem(Item item)

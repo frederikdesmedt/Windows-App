@@ -87,9 +87,17 @@ namespace TripPlanner
             }
         }
 
-        private void OnTripAdded(string name, DateTime date)
+        private async void OnTripAdded(string name, DateTime date)
         {
-            
+            TripViewModel trip = new TripViewModel(new Trip
+            {
+                Name = name,
+                Date = date
+            });
+
+            CurrentTripList.Add(trip);
+            OpenDetails(trip);
+            await Backend.Local.SaveTrip(trip);
         }
 
         private void OnToggleMenu(object sender, RoutedEventArgs e)

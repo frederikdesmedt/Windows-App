@@ -20,7 +20,7 @@ namespace TripPlanner.Model
         [JsonIgnore]
         public Trip Self => this;
 
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         private ObservableCollection<Item> itemList = new ObservableCollection<Item>();
 
@@ -46,6 +46,14 @@ namespace TripPlanner.Model
         {
             get { return icon; }
             set { icon = value; OnPropertyChanged(nameof(Icon)); }
+        }
+
+        private DateTime _date = DateTime.Now;
+
+        public DateTime Date
+        {
+            get { return _date; }
+            set { _date = value; OnPropertyChanged(nameof(Date)); }
         }
 
         public Trip()

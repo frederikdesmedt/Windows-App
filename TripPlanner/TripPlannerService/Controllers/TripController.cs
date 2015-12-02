@@ -52,16 +52,17 @@ namespace TripPlannerService.Controllers
 
         [HttpPost]
         [Route("api/Trip/Save/Trip")]
-        public void SaveTrip(Trip trip)
+        public int SaveTrip(Trip trip)
         {
             trip.UserEmail = User.Identity.Name;
             dbContext.Trips.AddOrUpdate(trip);
-            //dbContext.SaveChanges();
+            dbContext.SaveChanges();
+            return trip.Id;
         }
 
         [HttpPost]
         [Route("api/Trip/Save/{tripId}/Item")]
-        public void SaveItem(int tripId, [FromBody] Item item)
+        public int SaveItem(int tripId, [FromBody] Item item)
         {
             Trip trip = dbContext.Trips.Find(tripId);
             if (trip != null && trip.UserEmail == User.Identity.Name)
@@ -79,7 +80,9 @@ namespace TripPlannerService.Controllers
                 {
                     trip.Items.Add(item);
                 }
+
                 dbContext.SaveChanges();
+                return trip.Id;
             }
             else
             {
@@ -108,6 +111,11 @@ namespace TripPlannerService.Controllers
         [Route("api/Trip/Remove/Item/{itemId}")]
         public void RemoveItem(int itemId)
         {
+            if (itemId == 0)
+            {
+                return;
+            }
+
             Item item = dbContext.Items.Find(itemId);
             Trip trip = dbContext.Trips.First(tr => tr.UserEmail == User.Identity.Name && tr.Items.Any(it => it.Id == item.Id));
             if (item != null && trip != null)
