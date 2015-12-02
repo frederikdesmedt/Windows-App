@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
@@ -45,9 +46,10 @@ namespace TripPlannerService.Controllers
         public IEnumerable<Trip> GetAllTrips()
         {
             string email = User.Identity.Name;
-            return from trip in dbContext.Trips
-                   where trip.UserEmail == email
-                   select trip;
+            IEnumerable<Trip> trips = (from trip in dbContext.Trips
+                               where trip.UserEmail == email
+                               select trip).Include(t => t.Items);
+            return trips;
         }
 
         [HttpPost]

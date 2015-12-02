@@ -44,10 +44,10 @@ namespace TripPlanner
 
         private async void LoginAndLoadData()
         {
-            Backend.BackendResponse re = await Backend.Local.Login("test@outlook.com", "Bl@123");
+            Backend.BackendResponse re = await Backend.Azure.Login("test@outlook.com", "Bl@123");
             if (re == Backend.BackendResponse.Ok)
             {
-                var dialog = new MessageDialog($"Logged in as {Backend.Local.Username}").ShowAsync();
+                var dialog = new MessageDialog($"Logged in as {Backend.Azure.Username}").ShowAsync();
                 await CurrentTripList.Load();
                 await dialog;
             }
@@ -108,7 +108,7 @@ namespace TripPlanner
 
             CurrentTripList.Add(trip);
             OpenDetails(trip);
-            await Backend.Local.SaveTrip(trip);
+            await Backend.Azure.SaveTrip(trip);
         }
 
         private void OnToggleMenu(object sender, RoutedEventArgs e)

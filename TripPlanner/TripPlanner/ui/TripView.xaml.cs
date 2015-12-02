@@ -75,7 +75,7 @@ namespace TripPlanner.ui
             // Update if not editing
             if (!isEditing)
             {
-                await Backend.Local.SaveItem(item, Trip.Trip);
+                await Backend.Azure.SaveItem(item, Trip.Trip);
             }
         }
 
@@ -88,7 +88,7 @@ namespace TripPlanner.ui
             {
                 checkedItem.IsChecked = !checkedItem.IsChecked.Value;
                 usedCheckBox.IsChecked = checkedItem.IsChecked.Value;
-                await Backend.Local.UpdateItemChecked(checkedItem);
+                await Backend.Azure.UpdateItemChecked(checkedItem);
             }
         }
 
@@ -105,7 +105,7 @@ namespace TripPlanner.ui
         private async void OnRemoved(Item item)
         {
             Trip.Trip.ItemList.Remove(item);
-            await Backend.Local.RemoveItem(item);
+            await Backend.Azure.RemoveItem(item);
         }
 
         private async void OnAdd(object sender, RoutedEventArgs e)

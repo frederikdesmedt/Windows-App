@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -23,13 +24,13 @@ namespace TripPlanner.Model
         }
 
         private static Backend _backend = new Backend();
-        public static Backend Local => _backend;
+        public static Backend Azure => _backend;
 
-        private static readonly Uri ENDPOINT = new Uri("http://localhost:5579/");
-        private const string GET = "Get";
-        private const string POST = "Post";
-        private const string PUT = "Put";
-        private const string DELETE = "Delete";
+        private static readonly Uri ENDPOINT = new Uri("http://tripmanager.azurewebsites.net/");
+        private const string GET = "GET";
+        private const string POST = "POST";
+        private const string PUT = "PUT";
+        private const string DELETE = "DELETE";
 
         private string _authenticationToken = "";
         private string _authenticationTokenType = "";
@@ -56,21 +57,29 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(await serializedContentTask);
             }
 
-            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            try
             {
-                string responseString = response.ReadToEnd();
-                JObject responseObject = JObject.Parse(responseString);
-                if (responseObject["access_token"] != null)
+                using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
                 {
-                    _authenticationToken = responseObject["access_token"].ToString();
-                    _authenticationTokenType = responseObject["token_type"].ToString();
-                    Username = responseObject["userName"].ToString();
-                    return BackendResponse.Ok;
+                    string responseString = response.ReadToEnd();
+                    JObject responseObject = JObject.Parse(responseString);
+                    if (responseObject["access_token"] != null)
+                    {
+                        _authenticationToken = responseObject["access_token"].ToString();
+                        _authenticationTokenType = responseObject["token_type"].ToString();
+                        Username = responseObject["userName"].ToString();
+                        return BackendResponse.Ok;
+                    }
+                    else
+                    {
+                        return BackendResponse.Unauthorized;
+                    }
                 }
-                else
-                {
-                    return BackendResponse.Unauthorized;
-                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw ex;
             }
         }
 

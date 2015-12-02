@@ -65,7 +65,7 @@ namespace TripPlanner.ui
             if (!TripList[0].Equals(Trip))
             {
                 TripList.Remove(Trip);
-                await Backend.Local.RemoveTrip(Trip.Trip);
+                await Backend.Azure.RemoveTrip(Trip.Trip);
             }
         }
     }
