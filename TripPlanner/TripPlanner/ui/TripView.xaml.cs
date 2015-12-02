@@ -28,6 +28,7 @@ namespace TripPlanner.ui
     /// </summary>
     public sealed partial class TripView : UserControl
     {
+        private MainPage mainPage;
 
         private TripViewModel _trip;
 
@@ -44,11 +45,13 @@ namespace TripPlanner.ui
         public TripView()
         {
             this.InitializeComponent();
+            
         }
 
-        public TripView(TripViewModel trip) : this()
+        public TripView(MainPage mp, TripViewModel trip) : this()
         {
             Trip = trip;
+            mainPage = mp;
         }
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -158,6 +161,13 @@ namespace TripPlanner.ui
                     foundChild = FindChildControl<T>(child);
             }
             return foundChild;
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            var bla = new Navigate();
+            mainPage.MainContent = bla;
+            bla.SetDestination(Trip.Trip.Name);
         }
     }
 }
