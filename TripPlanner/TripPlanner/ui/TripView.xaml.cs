@@ -34,7 +34,9 @@ namespace TripPlanner.ui
         public TripViewModel Trip
         {
             get { return _trip; }
-            set { _trip = value;
+            set
+            {
+                _trip = value;
                 DataContext = value;
             }
         }
@@ -57,6 +59,11 @@ namespace TripPlanner.ui
 
         private void OnEdit(object sender, RoutedEventArgs e)
         {
+            if (Trip.IsRemoving)
+            {
+                Trip.IsRemoving = false;
+            }
+
             Trip.IsEditable = !Trip.IsEditable;
         }
 
@@ -71,8 +78,8 @@ namespace TripPlanner.ui
 
         private async void OnItemToggle(object sender, RoutedEventArgs e)
         {
-            Item checkedItem = ((FrameworkElement) sender).DataContext as Item;
-            CheckBox usedCheckBox = (CheckBox) e.OriginalSource;
+            Item checkedItem = ((FrameworkElement)sender).DataContext as Item;
+            CheckBox usedCheckBox = (CheckBox)e.OriginalSource;
 
             if (checkedItem?.IsChecked != null && usedCheckBox.IsChecked.HasValue && checkedItem.IsChecked.Value != usedCheckBox.IsChecked.Value)
             {
@@ -82,10 +89,75 @@ namespace TripPlanner.ui
             }
         }
 
-
         private void OnDelete(object sender, RoutedEventArgs e)
         {
+            if (Trip.IsEditable)
+            {
+                Trip.IsEditable = false;
+            }
+
             Trip.IsRemoving = !Trip.IsRemoving;
+        }
+
+        private async void OnRemoved(Item item)
+        {
+            Trip.Trip.ItemList.Remove(item);
+            await Backend.Local.RemoveItem(item);
+        }
+
+        private async void OnAdd(object sender, RoutedEventArgs e)
+        {
+            Item item = new Item();
+            Trip.Trip.ItemList.Add(item);
+            ItemList.SelectedItem = item;
+            await Task.Delay(500);
+            var listViewItem = ItemList.ContainerFromItem(item);
+            var customControl = FindChildControl<CheckBox>(listViewItem);
+            EditableTextBlock textBlock = customControl.Content as EditableTextBlock;
+            if (textBlock != null)
+            {
+                textBlock.IsEditable = true;
+                textBlock.IsEditing = true;
+                textBlock.Focus();
+                EditableTextBlock.IsEditingChangedDelegate del = null;
+                del = (editing, item1) =>
+                {
+                    textBlock.OnIsEditingChanged -= del;
+                    Trip.PropertyChanged += (o, args) =>
+                    {
+                        if (args.PropertyName == "IsEditable")
+                        {
+                            textBlock.IsEditable = Trip.IsEditable;
+                        }
+                        else if (args.PropertyName == "IsRemoving")
+                        {
+                            textBlock.IsRemoving = Trip.IsRemoving;
+                        }
+                    };
+
+                    textBlock.IsEditable = Trip.IsEditable;
+                    textBlock.IsRemoving = Trip.IsRemoving;
+                };
+
+                textBlock.OnIsEditingChanged += del;
+                
+            }
+        }
+
+        private T FindChildControl<T>(DependencyObject control)
+                                   where T : DependencyObject
+        {
+            T foundChild = null;
+            int childNumber = VisualTreeHelper.GetChildrenCount(control);
+            for (int i = 0; i < childNumber; i++)
+            {
+                var child = VisualTreeHelper.GetChild(control, i);
+                if (child != null && child is T)
+                    foundChild = (T)child;
+                else
+                    foundChild = FindChildControl<T>(child);
+            }
+            return foundChild;
         }
     }
 }

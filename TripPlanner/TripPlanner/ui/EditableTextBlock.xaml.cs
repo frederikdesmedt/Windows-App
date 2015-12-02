@@ -123,6 +123,18 @@ namespace TripPlanner.ui
 
         private readonly HyperlinkButton _actionButton = new HyperlinkButton();
 
+        public void Focus()
+        {
+            if (_leftSide is TextBox)
+            {
+                (_leftSide as TextBox).Focus(FocusState.Programmatic);
+            }
+            else
+            {
+                Focus(FocusState.Programmatic);
+            }
+        }
+
         private UIElement _leftSide;
 
         #region Constructor

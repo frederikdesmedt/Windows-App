@@ -52,19 +52,20 @@ namespace TripPlannerService.Controllers
 
         [HttpPost]
         [Route("api/Trip/Save/Trip")]
-        public void SaveTrip(Trip trip)
+        public int SaveTrip(Trip trip)
         {
             trip.UserEmail = User.Identity.Name;
             dbContext.Trips.AddOrUpdate(trip);
-            //dbContext.SaveChanges();
+            dbContext.SaveChanges();
+            return trip.Id;
         }
 
         [HttpPost]
         [Route("api/Trip/Save/{tripId}/Item")]
-        public void SaveItem(int tripId,  [FromBody] Item item)
+        public int SaveItem(int tripId, [FromBody] Item item)
         {
             Trip trip = dbContext.Trips.Find(tripId);
-            if (trip != null)
+            if (trip != null && trip.UserEmail == User.Identity.Name)
             {
                 bool foundExisting = false;
                 foreach (var existingItem in new List<Item>(trip.Items.Where(i => i.Id == item.Id)))
@@ -79,7 +80,9 @@ namespace TripPlannerService.Controllers
                 {
                     trip.Items.Add(item);
                 }
+
                 dbContext.SaveChanges();
+                return trip.Id;
             }
             else
             {
@@ -92,9 +95,48 @@ namespace TripPlannerService.Controllers
         public void UpdateItemChecked(int itemId, int isChecked)
         {
             Item item = dbContext.Items.Find(itemId);
-            if (item != null)
+            Trip trip = dbContext.Trips.First(tr => tr.UserEmail == User.Identity.Name && tr.Items.Any(it => it.Id == item.Id));
+            if (item != null && trip != null)
             {
                 item.IsChecked = isChecked == 1;
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/Trip/Remove/Item/{itemId}")]
+        public void RemoveItem(int itemId)
+        {
+            if (itemId == 0)
+            {
+                return;
+            }
+
+            Item item = dbContext.Items.Find(itemId);
+            Trip trip = dbContext.Trips.First(tr => tr.UserEmail == User.Identity.Name && tr.Items.Any(it => it.Id == item.Id));
+            if (item != null && trip != null)
+            {
+                dbContext.Items.Remove(item);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/Trip/Remove/Trip/{tripId}")]
+        public void RemoveTrip(int tripId)
+        {
+            Trip trip = dbContext.Trips.Find(tripId);
+            if (trip.UserEmail == User.Identity.Name)
+            {
+                dbContext.Trips.Remove(trip);
                 dbContext.SaveChanges();
             }
             else

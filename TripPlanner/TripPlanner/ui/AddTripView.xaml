@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="TripPlanner.ui.AddTripView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TripPlanner.ui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid Padding="10" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox PlaceholderText="Where do you want to go?" HorizontalAlignment="Stretch" x:Name="Name"/>
+        <CalendarDatePicker Grid.Row="1" PlaceholderText="When are you going?" HorizontalAlignment="Stretch" x:Name="Date"/>
+        <Button Grid.Row="2" Content="Select an icon" />
+        <Button Grid.Row="3" VerticalAlignment="Bottom" Content="Add the trip" Click="OnAddTrip"/>
+    </Grid>
+</UserControl>

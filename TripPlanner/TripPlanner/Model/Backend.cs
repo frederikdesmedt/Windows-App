@@ -29,6 +29,7 @@ namespace TripPlanner.Model
         private const string GET = "Get";
         private const string POST = "Post";
         private const string PUT = "Put";
+        private const string DELETE = "Delete";
 
         private string _authenticationToken = "";
         private string _authenticationTokenType = "";
@@ -135,7 +136,14 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(JsonConvert.SerializeObject(trip));
             }
 
-            await request.GetResponseAsync();
+            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            {
+                if (trip.Id == 0)
+                {
+                    var responseData = await response.ReadToEndAsync();
+                    trip.Id = int.Parse(responseData);
+                }
+            }
         }
 
         public async Task UpdateItemChecked(Item item)
@@ -155,6 +163,19 @@ namespace TripPlanner.Model
                 await writer.WriteAsync(data);
             }
 
+            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            {
+                if (item.Id == 0)
+                {
+                    var responseData = await response.ReadToEndAsync();
+                    item.Id = int.Parse(responseData);
+                }
+            }
+        }
+
+        public async Task RemoveItem(Item item)
+        {
+            HttpWebRequest request = PopulateRequest(new Uri($"/api/Trip/Remove/Item/{item.Id}", UriKind.Relative), DELETE);
             await request.GetResponseAsync();
         }
 

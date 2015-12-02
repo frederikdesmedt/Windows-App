@@ -34,6 +34,10 @@ namespace TripPlanner
         {
             this.InitializeComponent();
             CurrentTripList = new TripList();
+            CurrentTripList.Add(new TripViewModel(new Trip(-1)
+            {
+                Name = "New trip", Icon = "\uE109"
+            }));
             DataContext = CurrentTripList;
             LoginAndLoadData();
         }
@@ -70,11 +74,30 @@ namespace TripPlanner
         {
             TripViewModel trip = e.AddedItems.First() as TripViewModel;
 
-            if (trip != null)
+            if (trip?.Trip.Id == -1)
+            {
+                AddTripView addTrip = new AddTripView();
+                TripContent.Content = addTrip;
+                addTrip.TripAdded += OnTripAdded;
+                MainSplit.IsPaneOpen = false;
+            } else if (trip != null)
             {
                 OpenDetails(trip);
                 MainSplit.IsPaneOpen = false;
             }
+        }
+
+        private async void OnTripAdded(string name, DateTime date)
+        {
+            TripViewModel trip = new TripViewModel(new Trip
+            {
+                Name = name,
+                Date = date
+            });
+
+            CurrentTripList.Add(trip);
+            OpenDetails(trip);
+            await Backend.Local.SaveTrip(trip);
         }
 
         private void OnToggleMenu(object sender, RoutedEventArgs e)
