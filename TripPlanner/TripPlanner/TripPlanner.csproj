@@ -115,6 +115,9 @@
     <Compile Include="Model\Trip.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ui\Navigate.xaml.cs">
+      <DependentUpon>Navigate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\TripControl.xaml.cs">
       <DependentUpon>TripControl.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
     <Page Include="ui\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ui\Navigate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\TripControl.xaml">
       <SubType>Designer</SubType>

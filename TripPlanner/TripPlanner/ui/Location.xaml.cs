@@ -15,7 +15,7 @@ namespace TripPlanner.ui
         Geolocator geolocator;
         public Location()
         {
-            
+
             geolocator = new Geolocator();
         }
 
@@ -35,16 +35,16 @@ namespace TripPlanner.ui
 
                 Geoposition myLocation = await geolocator.GetGeopositionAsync(maxAge, timeout);
 
-                // GeoCoordinate geocord = new GeoCoordinate(myLocation.Coordinate.Latitude, myLocation.Coordinate.Longitude);
-                // mapje.Center = geocord;
-                // mapje.ZoomLevel = 12;
+                Geocoordinate geocord = new Geocoordinate(mylocation.coordinate.latitude, mylocation.coordinate.longitude);
+                mapje.center = geocord;
+                mapje.zoomlevel = 12;
 
-                
+
 
             }
             catch (Exception e)
             {
-               //exeption
+                //exeption
             }
         }
 
