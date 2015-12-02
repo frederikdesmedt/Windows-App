@@ -8,7 +8,8 @@
     xmlns:custom="using:TripPlanner.ui"
     xmlns:model="using:TripPlanner.Model"
     xmlns:viewModel="using:TripPlanner.ViewModel"
-    mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
+    mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}"
+    x:Name="TheMainPage">
 
     <Page.TopAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}" FontSize="50">
@@ -60,7 +61,7 @@
 
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModel:TripViewModel">
-                            <custom:TripControl Trip="{x:Bind Path=Self}"/>
+                            <custom:TripControl Trip="{x:Bind Path=Self}" TripList="{Binding ElementName=TheMainPage, Path=CurrentTripList}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

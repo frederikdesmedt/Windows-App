@@ -13,7 +13,6 @@
     <StackPanel Orientation="Horizontal" RightTapped="OnTripHolding">
         <FlyoutBase.AttachedFlyout>
             <MenuFlyout>
-                <MenuFlyoutItem Text="&#xE104; Edit" FontFamily="Segoe UI Symbol" Click="MenuEdit_OnClick"/>
                 <MenuFlyoutItem Text="&#xE107; Delete" FontFamily="Segoe UI Symbol" Click="MenuDelete_OnClick" />
             </MenuFlyout>
         </FlyoutBase.AttachedFlyout>

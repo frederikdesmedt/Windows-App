@@ -25,10 +25,22 @@ namespace TripPlanner.ui
         public TripControl()
         {
             this.InitializeComponent();
-            
         }
 
+        public static DependencyProperty TripListDependencyProperty = DependencyProperty.Register("TripList",
+            typeof (TripList), typeof (TripControl), null);
+
         public static DependencyProperty TripProp = DependencyProperty.Register("Trip", typeof(TripViewModel), typeof(TripControl), null);
+
+        public TripList TripList
+        {
+            get { return GetValue(TripListDependencyProperty) as TripList; }
+            set
+            {
+                SetValue(TripListDependencyProperty, value);
+                DataContext = value;
+            }
+        }
 
         public TripViewModel Trip
         {
@@ -48,22 +60,13 @@ namespace TripPlanner.ui
             flyoutBase.ShowAt(senderElement);
         }
 
-        private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
+        private async void MenuDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Editing trip " + Trip.Trip.Name);
-            //Trip_OnTapped(sender, null);
+            if (!TripList[0].Equals(Trip))
+            {
+                TripList.Remove(Trip);
+                await Backend.Local.RemoveTrip(Trip.Trip);
+            }
         }
-
-        private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine("Deleting trip " + Trip.Trip.Name);
-        }
-
-        //private void Trip_OnTapped(object sender, TappedRoutedEventArgs e)
-        //{
-        //    Debug.WriteLine("Default action for trip in listview");
-        //    Frame f = Window.Current.Content as Frame;
-        //    f.Navigate(typeof (TripView), Trip);
-        //}
     }
 }

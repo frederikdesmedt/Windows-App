@@ -72,6 +72,12 @@ namespace TripPlanner
 
         private void TripList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count == 0)
+            {
+                TripContent.Content = null;
+                return;
+            }
+
             TripViewModel trip = e.AddedItems.First() as TripViewModel;
 
             if (trip?.Trip.Id == -1)

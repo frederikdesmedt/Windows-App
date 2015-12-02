@@ -175,7 +175,23 @@ namespace TripPlanner.Model
 
         public async Task RemoveItem(Item item)
         {
+            if (item.Id == 0)
+            {
+                return;
+            }
+
             HttpWebRequest request = PopulateRequest(new Uri($"/api/Trip/Remove/Item/{item.Id}", UriKind.Relative), DELETE);
+            await request.GetResponseAsync();
+        }
+
+        public async Task RemoveTrip(Trip trip)
+        {
+            if (trip.Id == 0)
+            {
+                return;
+            }
+
+            HttpWebRequest request = PopulateRequest(new Uri($"api/Trip/Remove/Trip/{trip.Id}", UriKind.Relative), DELETE);
             await request.GetResponseAsync();
         }
 
