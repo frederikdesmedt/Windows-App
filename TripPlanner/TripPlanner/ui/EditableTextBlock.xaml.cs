@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.UI;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
@@ -28,8 +29,30 @@ namespace TripPlanner.ui
 
         #region Properties
 
-        public static DependencyProperty ItemProperty = DependencyProperty.Register("Item", typeof(Item), typeof(EditableTextBlock), null);
-        public static DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
+        public static readonly DependencyProperty EditableTextProperty = DependencyProperty.Register(
+            nameof(EditableText), typeof (string), typeof (EditableTextBlock), null);
+
+        public string EditableText
+        {
+            get { return GetValue(EditableTextProperty)?.ToString() ?? ""; }
+            set { SetValue(EditableTextProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemModeProperty = DependencyProperty.Register(nameof(ItemMode), typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(null,
+            (o, args) =>
+            {
+                var etb = o as EditableTextBlock;
+                etb._OnIsEditingChanged(etb.IsEditing, null);
+            }));
+
+        public bool ItemMode
+        {
+            get { return (bool) GetValue(ItemModeProperty); }
+            set { SetValue(ItemModeProperty, value); }
+        }
+
+        public static readonly DependencyProperty ItemProperty = DependencyProperty.Register("Item", typeof(Item), typeof(EditableTextBlock), null);
+        public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register("IsEditable", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
             (o, args) =>
             {
                 var etb = o as EditableTextBlock;
@@ -37,7 +60,7 @@ namespace TripPlanner.ui
                 etb?.NotifyPropertyChanged(nameof(IsEditable));
             }));
 
-        public static DependencyProperty IsRemovingProperty = DependencyProperty.Register("IsRemoving", typeof (bool),
+        public static readonly DependencyProperty IsRemovingProperty = DependencyProperty.Register("IsRemoving", typeof (bool),
             typeof (EditableTextBlock), new PropertyMetadata(false, (o, args) =>
             {
                 var etb = o as EditableTextBlock;
@@ -46,7 +69,7 @@ namespace TripPlanner.ui
             }));
 
 
-        public static DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
+        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(EditableTextBlock), new PropertyMetadata(false,
             (o, args) =>
             {
                 var etb = o as EditableTextBlock;
@@ -196,10 +219,11 @@ namespace TripPlanner.ui
             {
                 TextBox box = new TextBox() {HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Center };
                 box.SetValue(Grid.ColumnProperty, 0);
+                box.FontSize = FontSize;
                 box.SetBinding(TextBox.TextProperty, new Binding()
                 {
                     Source = this,
-                    Path = new PropertyPath("Item.Name"),
+                    Path = new PropertyPath(ItemMode ? "Item.Name" : "EditableText"),
                     Mode = BindingMode.TwoWay
                 });
                 
@@ -212,7 +236,7 @@ namespace TripPlanner.ui
                 block.SetBinding(TextBlock.TextProperty, new Binding()
                 {
                     Source = this,
-                    Path = new PropertyPath("Item.Name"),
+                    Path = new PropertyPath(ItemMode ? "Item.Name" : "EditableText"),
                     Mode = BindingMode.OneWay
                 });
                 _leftSide = block;

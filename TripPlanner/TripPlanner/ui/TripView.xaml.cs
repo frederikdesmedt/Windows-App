@@ -169,5 +169,14 @@ namespace TripPlanner.ui
             mainPage.MainContent = bla;
             bla.SetDestination(Trip.Trip.Name);
         }
+
+        private void TripTitle_IsEditingChanged(bool isEditing, Item item)
+        {
+            // Update if not editing
+            if (!isEditing)
+            {
+                Backend.Azure.SaveTripWithoutItems(Trip);
+            }
+        }
     }
 }

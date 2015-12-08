@@ -63,6 +63,47 @@ namespace TripPlannerService.Controllers
         }
 
         [HttpPost]
+        [Route("api/Trip/Save/Trip/NoItems")]
+        public int SaveTripWithoutItems(Trip trip)
+        {
+            trip.UserEmail = User.Identity.Name;
+            if (trip.Id > 0)
+            {
+                Trip dbTrip = dbContext.Trips.Find(trip.Id);
+                if (dbTrip != null)
+                {
+                    if (!string.IsNullOrEmpty(trip.Title))
+                    {
+                        dbTrip.Title = trip.Title;
+                    }
+
+                    if (!string.IsNullOrEmpty(trip.Icon))
+                    {
+                        dbTrip.Icon = trip.Icon;
+                    }
+
+                    if (trip.Date >= DateTime.Today)
+                    {
+                        dbTrip.Date = trip.Date;
+                    }
+
+                    if (trip.Location != null)
+                    {
+                        dbTrip.Location = trip.Location;
+                    }
+                }
+
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                return SaveTrip(trip);
+            }
+            
+            return trip.Id;
+        }
+
+        [HttpPost]
         [Route("api/Trip/Save/{tripId}/Item")]
         public int SaveItem(int tripId, [FromBody] Item item)
         {

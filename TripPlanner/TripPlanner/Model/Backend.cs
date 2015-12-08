@@ -131,6 +131,35 @@ namespace TripPlanner.Model
             }
         }
 
+        public Task SaveTripWithoutItems(TripViewModel tripViewModel)
+        {
+            return SaveTripWithoutItems(tripViewModel.Trip);
+        }
+
+        public async Task SaveTripWithoutItems(Trip trip)
+        {
+            HttpWebRequest request = PopulateRequest(new Uri("/api/Trip/Save/Trip/NoItems", UriKind.Relative), POST);
+            Task<Stream> outStream = request.GetRequestStreamAsync();
+            using (StreamWriter writer = new StreamWriter(await outStream))
+            {
+                Trip outTrip = new Trip
+                {
+                    Date = trip.Date, Icon = trip.Icon, Id = trip.Id, Name = trip.Name
+                };
+
+                await writer.WriteAsync(JsonConvert.SerializeObject(outTrip));
+            }
+
+            using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+            {
+                if (trip.Id == 0)
+                {
+                    var responseData = await response.ReadToEndAsync();
+                    trip.Id = int.Parse(responseData);
+                }
+            }
+        }
+
         public Task SaveTrip(TripViewModel tripViewModel)
         {
             return SaveTrip(tripViewModel.Trip);
