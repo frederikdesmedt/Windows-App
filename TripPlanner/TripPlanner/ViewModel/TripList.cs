@@ -13,6 +13,7 @@ namespace TripPlanner.ViewModel
 
         public async Task Load()
         {
+            ClearItems();
             foreach (TripViewModel trip in (await Backend.Azure.GetTrips()).Select(t => new TripViewModel(t)))
             {
                 Add(trip);

@@ -78,8 +78,7 @@ namespace TripPlanner.Model
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                throw ex;
+                return BackendResponse.Unauthorized;
             }
         }
 

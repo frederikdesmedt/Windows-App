@@ -36,25 +36,22 @@ namespace TripPlanner
             CurrentTripList = new TripList();
             CurrentTripList.Add(new TripViewModel(new Trip(-1)
             {
-                Name = "New trip", Icon = "\uE109"
+                Name = "New trip",
+                Icon = "\uE109"
             }));
+
             DataContext = CurrentTripList;
-            LoginAndLoadData();
         }
 
-        private async void LoginAndLoadData()
+        private async void LoadData()
         {
-            Backend.BackendResponse re = await Backend.Azure.Login("test@outlook.com", "Bl@123");
-            if (re == Backend.BackendResponse.Ok)
-            {
-                var dialog = new MessageDialog($"Logged in as {Backend.Azure.Username}").ShowAsync();
-                await CurrentTripList.Load();
-                await dialog;
-            }
-            else
-            {
-                await new MessageDialog("Couldn't log in").ShowAsync();
-            }
+            await CurrentTripList.Load();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            LoadData();
         }
 
         public UserControl MainContent
@@ -91,7 +88,8 @@ namespace TripPlanner
                 TripContent.Content = addTrip;
                 addTrip.TripAdded += OnTripAdded;
                 MainSplit.IsPaneOpen = false;
-            } else if (trip != null)
+            }
+            else if (trip != null)
             {
                 OpenDetails(trip);
                 MainSplit.IsPaneOpen = false;
@@ -118,7 +116,7 @@ namespace TripPlanner
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
     }
 }
