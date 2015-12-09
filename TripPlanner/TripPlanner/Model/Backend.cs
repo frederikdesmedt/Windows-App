@@ -26,6 +26,8 @@ namespace TripPlanner.Model
         private static Backend _backend = new Backend();
         public static Backend Azure => _backend;
 
+        public static MapService MapService => new MapService();
+
         private static readonly Uri ENDPOINT = new Uri("http://tripmanager.azurewebsites.net/");
         private const string GET = "GET";
         private const string POST = "POST";

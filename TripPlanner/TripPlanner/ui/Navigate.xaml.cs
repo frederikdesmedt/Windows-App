@@ -29,20 +29,14 @@ namespace TripPlanner.ui
         public Navigate()
         {
             this.InitializeComponent();
-
-           
         }
 
-        public async void SetDestination(string des)
+        public void SetDestination(MapLocation loc)
         {
             try
             {
-
-                MapLocation x = await GetPositionFromAddressAsync(des);
-                destinationMap.Center = x.Point;
+                destinationMap.Center = loc.Point;
                 destinationMap.ZoomLevel = 12;
-
-                //AddPoint(destinationMap, x.Point);
             }
             catch (Exception e)
             {
@@ -52,34 +46,7 @@ namespace TripPlanner.ui
         }
 
 
-      public static async Task<MapLocation> GetPositionFromAddressAsync(string address)
-        {
-            // get current location to use as a search start point
-            var locator = new Geolocator();
-            locator.DesiredAccuracyInMeters = 50;
-            TimeSpan maxAge = new TimeSpan(0, 0, 1);
-            TimeSpan timeout = new TimeSpan(0, 0, 15);
-            var position = await locator.GetGeopositionAsync();
-
-            // convert current location to a GeoPoint
-            var basicGeoposition = new BasicGeoposition();
-            //basicGeoposition.Latitude = position.Coordinate.Latitude;
-            //basicGeoposition.Longitude = position.Coordinate.Longitude;
-            var point = new Geopoint(basicGeoposition);
-
-            // using the address passed in as a parameter, search for MapLocations that match it
-            var mapLocationFinderResult = await MapLocationFinder.FindLocationsAsync(address, point, 2);
-
-            if (mapLocationFinderResult.Status == MapLocationFinderStatus.Success)
-            {
-                return mapLocationFinderResult.Locations[0];
-            }
-
-            return default(MapLocation);
-        
-
-
-        }
+      
 
         //private void AddPoint(Map controlMap, Geocoordinate geo)
         //{

@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Model\Backend.cs" />
     <Compile Include="Model\ISelfRepresentable.cs" />
+    <Compile Include="Model\MapService.cs" />
     <Compile Include="ui\AddTripView.xaml.cs">
       <DependentUpon>AddTripView.xaml</DependentUpon>
     </Compile>
@@ -108,19 +109,16 @@
     <Compile Include="ui\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui\Location.xaml.cs">
-      <DependentUpon>Location.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ui\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ui\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Trip.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ui\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\Navigate.xaml.cs">
       <DependentUpon>Navigate.xaml</DependentUpon>
     </Compile>
@@ -166,10 +164,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\EditableTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ui\Location.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
