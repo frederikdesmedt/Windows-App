@@ -36,6 +36,7 @@ namespace TripPlanner.Model
 
         public Item()
         {
+            IsChecked = false;
         }
 
         public Item(int id)

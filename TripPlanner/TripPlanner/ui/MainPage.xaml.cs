@@ -7,6 +7,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TripPlanner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Services.Maps;
+using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -16,6 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.ui;
 using TripPlanner.ViewModel;
@@ -66,7 +69,15 @@ namespace TripPlanner
 
         public void OpenDetails(TripViewModel trip)
         {
+            SetBackgroundToLocation(trip.Trip);
             TripContent.Content = new TripView(this, trip);
+        }
+
+        private async void SetBackgroundToLocation(Trip trip)
+        {
+            MapLocation location = await Backend.MapService.RegisterTrip(trip);
+            BitmapImage img = await Backend.MapService.GetStreetviewImage(location);
+            Background = new ImageBrush() { ImageSource = img, Stretch = Stretch.UniformToFill };
         }
 
         public void OpenMainPage()

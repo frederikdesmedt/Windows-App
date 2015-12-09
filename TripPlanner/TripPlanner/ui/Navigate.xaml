@@ -11,12 +11,7 @@
     d:DesignWidth="400">
 
     <Grid>
-
-
         <TextBlock x:Name="destination">Brussel</TextBlock>
-        <maps:MapControl x:Name="destinationMap"/>
-
-       
-
+        <maps:MapControl x:Name="destinationMap" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl"/>
     </Grid>
 </UserControl>

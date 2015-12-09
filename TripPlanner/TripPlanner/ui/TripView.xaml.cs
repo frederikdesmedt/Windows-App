@@ -7,7 +7,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Services.Maps;
 using Windows.System;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,6 +17,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.Model;
 using TripPlanner.ViewModel;
@@ -52,6 +55,7 @@ namespace TripPlanner.ui
         {
             Trip = trip;
             mainPage = mp;
+            panel.Background = new SolidColorBrush(Color.FromArgb(90, 0, 0, 0));
         }
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -163,11 +167,12 @@ namespace TripPlanner.ui
             return foundChild;
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             var bla = new Navigate();
             mainPage.MainContent = bla;
-            bla.SetDestination(Trip.Trip.Name);
+            MapLocation location = await Backend.MapService.RegisterTrip(Trip.Trip);
+            bla.SetDestination(location);
         }
 
         private void TripTitle_IsEditingChanged(bool isEditing, Item item)

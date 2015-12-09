@@ -101,15 +101,13 @@
     </Compile>
     <Compile Include="Model\Backend.cs" />
     <Compile Include="Model\ISelfRepresentable.cs" />
+    <Compile Include="Model\MapService.cs" />
     <Compile Include="ui\AddTripView.xaml.cs">
       <DependentUpon>AddTripView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\CustomCheckBox.cs" />
     <Compile Include="ui\EditableTextBlock.xaml.cs">
       <DependentUpon>EditableTextBlock.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ui\Location.xaml.cs">
-      <DependentUpon>Location.xaml</DependentUpon>
     </Compile>
     <Compile Include="ui\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -162,10 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\EditableTextBlock.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ui\Location.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
