@@ -12,8 +12,14 @@
     <GridView>
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapGrid HorizontalChildrenAlignment="Stretch" Orientation="Horizontal" />
+                <WrapGrid  HorizontalChildrenAlignment="Stretch" Orientation="Horizontal" PointerPressed="wrapGrid_PointerPressed" />
+                
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
+
+        <ItemsControl.Items>
+            <FontIcon Glyph="{Binding Glyph}"/>
+            
+        </ItemsControl.Items>
     </GridView>
 </UserControl>

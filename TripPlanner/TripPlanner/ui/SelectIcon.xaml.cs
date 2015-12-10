@@ -19,9 +19,24 @@ namespace TripPlanner.ui
 {
     public sealed partial class SelectIcon : UserControl
     {
+
+        private readonly DependencyProperty glyph = DependencyProperty.Register("Glyph", typeof(string), typeof(TripPivotItem), null);
         public SelectIcon()
         {
             this.InitializeComponent();
+        }
+
+        public string Glyph
+        {
+            get { return GetValue(glyph) as string; }
+            set { SetValue(glyph, value); }
+        }
+        private void wrapGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {                     //is niet de juiste methode, maar dit moet aangeroepen worden als er een icoontje gekozen word.
+            TripPivotItem a = new TripPivotItem();
+            a.Glyph = wrapGrid.getSelected();
+
+            Azure.fix(); //databank wegschrijven
         }
     }
 }
