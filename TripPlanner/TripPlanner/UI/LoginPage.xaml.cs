@@ -35,21 +35,27 @@ namespace TripPlanner.ui
         {
             base.OnNavigatedTo(e);
             PasswordVault vault = new PasswordVault();
-            var credentials = vault.FindAllByResource("creds");
-            if (credentials.Any())
+
+            try
             {
-                var credential = credentials.First();
-                Username.Text = credential.UserName;
-                credential.RetrievePassword();
-                Password.Password = credential.Password;
-                Login(null, null);
+                var credentials = vault.FindAllByResource("creds");
+                if (credentials.Any())
+                {
+                    var credential = credentials.First();
+                    Username.Text = credential.UserName;
+                    credential.RetrievePassword();
+                    Password.Password = credential.Password;
+                    Login(null, null);
+                }
+            }
+            catch (Exception)
+            {
             }
 
             if (e.Parameter != null)
             {
                 Username.Text = e.Parameter.ToString();
             }
-            
         }
 
         private async void Login(object sender, RoutedEventArgs e)
