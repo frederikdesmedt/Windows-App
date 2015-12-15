@@ -76,7 +76,7 @@ namespace TripPlanner
             Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
             if (trip.Location == null)
             {
-                trip.Location = await Backend.MapService.RegisterTrip(trip);
+                trip.Location = await Backend.MapService.RetrieveTrip(trip);
             }
             
             MapLocation location = trip.Location;

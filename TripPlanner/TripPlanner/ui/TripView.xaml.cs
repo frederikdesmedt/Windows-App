@@ -181,10 +181,15 @@ namespace TripPlanner.ui
 
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            var bla = new Navigate();
-            mainPage.MainContent = bla;
-            MapLocation location = await Backend.MapService.RegisterTrip(Trip.Trip);
-            bla.SetDestination(location);
+            var nav = new Navigate();
+            mainPage.MainContent = nav;
+
+            if (Trip.Trip.Location == null)
+            {
+                Trip.Trip.Location = await Backend.MapService.RetrieveTrip(Trip.Trip);
+            }
+
+            nav.SetDestination(Trip.Trip.Location);
         }
 
         private void TripTitle_IsEditingChanged(bool isEditing, Item item)

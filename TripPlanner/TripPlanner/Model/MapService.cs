@@ -18,28 +18,16 @@ namespace TripPlanner.Model
     public class MapService
     {
 
-        public Dictionary<Trip, MapLocation> LocationMapping = new Dictionary<Trip, MapLocation>();
-        public Dictionary<MapLocation, BitmapImage> StreetviewMapping = new Dictionary<MapLocation, BitmapImage>(); 
-
         public MapService() { }
 
-        public async Task<MapLocation> RegisterTrip(Trip t)
+        public async Task<MapLocation> RetrieveTrip(Trip t)
         {
-            //if (LocationMapping.ContainsKey(t))
-            //{
-            //    return LocationMapping[t];
-            //}
             MapLocation ml = await GetPositionFromAddressAsync(t.Name);
-            LocationMapping.Add(t, ml);
             return ml;
         }
 
         public async Task<BitmapImage> GetStreetviewImage(MapLocation location)
         {
-            if (StreetviewMapping.ContainsKey(location))
-            {
-                return StreetviewMapping[location];
-            }
             // string url = $"https://maps.googleapis.com/maps/api/streetview?size=800x600&&fov=90&heading=200&pitch=0";
 
             //string url = $"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location.Point.Position.Latitude},{location.Point.Position.Longitude}&radius=500&keyword=monument";
@@ -66,7 +54,6 @@ namespace TripPlanner.Model
                         string imageUrl = $"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1200&photoreference={refer}&key=AIzaSyBHZBLrtywOoyYjlYn2FSi_Ueia76VwL5U";
                         Debug.WriteLine("Image URL: " + imageUrl);
                         BitmapImage bi = new BitmapImage(new Uri(imageUrl, UriKind.Absolute));
-                        StreetviewMapping.Add(location, bi);
                         return bi;
                     }
                 }
