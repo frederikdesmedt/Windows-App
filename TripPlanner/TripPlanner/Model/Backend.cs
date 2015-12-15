@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -39,10 +40,47 @@ namespace TripPlanner.Model
         
         public string Username { get; private set; }
 
+        public async Task<RegistrationResponse> Register(UserViewModel user)
+        {
+            List<ValidationResult> results = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(user, new ValidationContext(user), results, true))
+            {
+                return new RegistrationResponse(results);
+            }
+            else
+            {
+                if (user.Password != user.RepeatPassword)
+                {
+                    results.Add(new ValidationResult("Passwords are not the same"));
+                    return new RegistrationResponse(results);
+                }
+
+                HttpWebRequest request = PopulateRequest(new Uri("/api/Account/Register", UriKind.Relative), POST);
+                Task<Stream> outStream = request.GetRequestStreamAsync();
+                using (StreamWriter writer = new StreamWriter(await outStream))
+                {
+                    string userData = JsonConvert.SerializeObject(user);
+                    await writer.WriteAsync(userData);
+                }
+
+                try
+                {
+                    using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))
+                    {
+                        return new RegistrationResponse(response: BackendResponse.Ok);
+                    }
+                }
+                catch (WebException e)
+                {
+                    return new RegistrationResponse(response: BackendResponse.BadRequest);
+                }
+            }
+        }
+
         public async Task<BackendResponse> Login(string username, string password)
         {
             PasswordVault vault = new PasswordVault();
-
+            vault.Add(new PasswordCredential("creds", username, password));
             
             HttpWebRequest request = PopulateRequest(new Uri("/Token", UriKind.Relative), POST, "application/x-www-form-urlencoded");
             Task<Stream> outStream = request.GetRequestStreamAsync();
@@ -78,7 +116,7 @@ namespace TripPlanner.Model
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BackendResponse.Unauthorized;
             }
@@ -251,7 +289,19 @@ namespace TripPlanner.Model
 
         public enum BackendResponse
         {
-            Ok, Unauthorized, Error
+            Ok, Unauthorized, Error, BadRequest
+        }
+
+        public class RegistrationResponse
+        {
+            public IEnumerable<ValidationResult> ValidationErrors { get; private set; }
+            public BackendResponse BackendResponse { get; private set; }
+
+            public RegistrationResponse(IEnumerable<ValidationResult> validationErrors = null, BackendResponse response = BackendResponse.Error)
+            {
+                ValidationErrors = validationErrors;
+                BackendResponse = response;
+            }
         }
     }
 }

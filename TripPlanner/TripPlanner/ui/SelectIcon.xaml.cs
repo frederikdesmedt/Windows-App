@@ -34,7 +34,8 @@ namespace TripPlanner.ui
         private void wrapGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
         {                     //is niet de juiste methode, maar dit moet aangeroepen worden als er een icoontje gekozen word.
             TripPivotItem a = new TripPivotItem();
-            //a.Glyph = 
+
+            //a.Glyph = wrapGrid.getSelected();
 
             //Azure.fix(); //databank wegschrijven
         }

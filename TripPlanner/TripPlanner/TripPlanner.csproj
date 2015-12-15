@@ -122,6 +122,9 @@
     <Compile Include="ui\Navigate.xaml.cs">
       <DependentUpon>Navigate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ui\RegistrationPage.xaml.cs">
+      <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ui\SelectIcon.xaml.cs">
       <DependentUpon>SelectIcon.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,7 @@
     </Compile>
     <Compile Include="ViewModel\TripList.cs" />
     <Compile Include="ViewModel\TripViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -176,6 +180,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ui\Navigate.xaml">
+    </Page>
+    <Page Include="ui\RegistrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ui\SelectIcon.xaml">
       <SubType>Designer</SubType>

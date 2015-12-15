@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="TripPlanner.ui.RegistrationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TripPlanner.ui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
+
+    <RelativePanel>
+        <Image Source="../../Assets/palm-tree-silhouette.png" Margin="0 0 0 20" Width="230" HorizontalAlignment="Center"
+               RelativePanel.Above="Username" RelativePanel.AlignHorizontalCenterWith="Username"/>
+        <TextBox x:Name="Username" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" PlaceholderText="Email" Width="250" KeyUp="Username_OnKeyUp"/>
+        <PasswordBox x:Name="Password" PlaceholderText="Password" Margin="0 10 0 0" Width="250" RelativePanel.Below="Username" RelativePanel.AlignHorizontalCenterWith="Username" KeyUp="Password_OnKeyUp"/>
+        <PasswordBox x:Name="RepeatPassword" PlaceholderText="Password" Margin="0 5 0 10" Width="250" RelativePanel.Below="Password" RelativePanel.AlignHorizontalCenterWith="Username" KeyUp="RepeatPassword_OnKeyUp"/>
+        <Button x:Name="RegisterButton" Click="Register" HorizontalAlignment="Stretch" Width="250" RelativePanel.Below="RepeatPassword" RelativePanel.AlignHorizontalCenterWith="Username">
+            <TextBlock Text="Register" HorizontalAlignment="Center"/>
+        </Button>
+        <TextBlock RelativePanel.AlignHorizontalCenterWith="Username" RelativePanel.Below="RegisterButton" Foreground="White" FontSize="18" x:Name="Error" TextWrapping="Wrap" />
+        <HyperlinkButton Margin="0 0 0 20" Foreground="White" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWith="RegisterButton" Content="Already have an account? Click here to login"/>
+    </RelativePanel>
+</Page>

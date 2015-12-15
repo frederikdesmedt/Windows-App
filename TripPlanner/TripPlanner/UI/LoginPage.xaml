@@ -8,13 +8,13 @@
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
     <RelativePanel>
-        <Image Source="../../Assets/palm-tree-silhouette.png" Margin="0 0 0 20" Width="230" HorizontalAlignment="Center"
+        <Image Source="../../Assets/palm-tree-silhouette.png" Margin="0 0 0 20" Width="300" HorizontalAlignment="Center"
                RelativePanel.Above="Username" RelativePanel.AlignHorizontalCenterWith="Username"/>
-        <TextBox x:Name="Username" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" PlaceholderText="Username" Width="200" KeyUp="Username_KeyUp"/>
-        <PasswordBox x:Name="Password" PlaceholderText="Password" Margin="0 5 0 10" Width="200" RelativePanel.Below="Username" RelativePanel.AlignHorizontalCenterWith="Username" KeyUp="Password_KeyUp"/>
-        <Button x:Name="LoginButton" Click="Login" HorizontalAlignment="Stretch" Width="200" RelativePanel.Below="Password" RelativePanel.AlignHorizontalCenterWith="Username">
+        <TextBox x:Name="Username" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" PlaceholderText="Email" Width="250" KeyUp="Username_KeyUp"/>
+        <PasswordBox x:Name="Password" PlaceholderText="Password" Margin="0 5 0 10" Width="250" RelativePanel.Below="Username" RelativePanel.AlignHorizontalCenterWith="Username" KeyUp="Password_KeyUp"/>
+        <Button x:Name="LoginButton" Click="Login" HorizontalAlignment="Stretch" Width="250" RelativePanel.Below="Password" RelativePanel.AlignHorizontalCenterWith="Username">
             <TextBlock Text="Login" HorizontalAlignment="Center"/>
         </Button>
-        <HyperlinkButton Margin="0 0 0 20" Foreground="White" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWith="LoginButton" Content="Register for an account"/>
+        <HyperlinkButton Margin="0 0 0 20" Foreground="White" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWith="LoginButton" Content="Register for an account" Click="Register"/>
     </RelativePanel>
 </Page>
