@@ -210,7 +210,8 @@ namespace TripPlanner.Model
             Task<Stream> outStream = request.GetRequestStreamAsync();
             using (StreamWriter writer = new StreamWriter(await outStream))
             {
-                await writer.WriteAsync(JsonConvert.SerializeObject(trip));
+                var s = JsonConvert.SerializeObject(trip);
+                await writer.WriteAsync(s);
             }
 
             using (StreamReader response = new StreamReader((await request.GetResponseAsync()).GetResponseStream()))

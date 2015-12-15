@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Model\Backend.cs" />
     <Compile Include="Model\ISelfRepresentable.cs" />
+    <Compile Include="Model\LocationProxy.cs" />
     <Compile Include="Model\MapService.cs" />
     <Compile Include="ui\AddTripView.xaml.cs">
       <DependentUpon>AddTripView.xaml</DependentUpon>
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\palm-tree-silhouette.png" />
+    <Content Include="Assets\rightarrow97.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

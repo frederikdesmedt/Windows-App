@@ -37,7 +37,25 @@ namespace TripPlanner.Model
         [JsonIgnore]
         public BitmapImage PopularImage { get; set; }
 
-        public MapLocation Location { get; set; }
+        private MapLocation _location;
+
+        [JsonIgnore]
+        public MapLocation Location
+        {
+            get { return _location; }
+            set
+            {
+                _location = value;
+                LocationProxy = new LocationProxy
+                {
+                    Latitude = value.Point.Position.Latitude,
+                    Longitude = value.Point.Position.Longitude
+                };
+            }
+        }
+
+        [JsonProperty("Location")]
+        public LocationProxy LocationProxy { get; private set; }
 
         private string name = "";
 

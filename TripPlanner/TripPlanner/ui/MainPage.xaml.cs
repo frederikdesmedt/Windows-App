@@ -73,10 +73,14 @@ namespace TripPlanner
 
         private async void SetBackgroundToLocation(Trip trip)
         {
+            
             Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
+            MainSplit.PaneBackground = Background;
+            bool shouldSave = false;
             if (trip.Location == null)
             {
                 trip.Location = await Backend.MapService.RetrieveTrip(trip);
+                shouldSave = true;
             }
             
             MapLocation location = trip.Location;
@@ -92,7 +96,7 @@ namespace TripPlanner
                 if (trip.PopularImage == null)
                 {
                     Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
-                    var tripView = (TripView) TripContent.Content;
+                    var tripView = TripContent.Content as TripView;
                     if (tripView != null)
                     {
                         tripView.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
@@ -101,11 +105,16 @@ namespace TripPlanner
                 else
                 {
                     Background = new ImageBrush() { ImageSource = trip.PopularImage, Stretch = Stretch.UniformToFill };
-                    var tripView = (TripView)TripContent.Content;
+                    var tripView = TripContent.Content as TripView;
                     if (tripView != null)
                     {
                         tripView.Background = new SolidColorBrush(Color.FromArgb(130, 50, 50, 50));
                     }
+                }
+
+                if (shouldSave)
+                {
+                    await Backend.Azure.SaveTrip(trip);
                 }
             }
             
@@ -148,10 +157,11 @@ namespace TripPlanner
                 Name = name,
                 Date = date
             });
-
+            
             CurrentTripList.Add(trip);
             OpenDetails(trip);
             await Backend.Azure.SaveTrip(trip);
+            SetBackgroundToLocation(trip.Trip);
         }
 
         private void OnToggleMenu(object sender, RoutedEventArgs e)
@@ -159,9 +169,17 @@ namespace TripPlanner
             MainSplit.IsPaneOpen = true;
         }
 
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        private void Home_OnClick(object sender, RoutedEventArgs e)
         {
+            var trip = TripList.SelectedItem as TripViewModel;
+            if(trip != null)
+            OpenDetails(trip);
+        }
 
+        private void Logout_OnClick(object sender, RoutedEventArgs e)
+        {
+            Backend.Azure.Logout();
+            Frame.Navigate(typeof (LoginPage));
         }
     }
 }

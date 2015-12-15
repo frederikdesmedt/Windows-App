@@ -13,16 +13,10 @@
 
     <Page.TopAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}" FontSize="50">
-            <AppBarButton Label="Home" Icon="Home"></AppBarButton>
-            <AppBarButton Label="Map"  Icon="Map" Click="AppBarButton_Click"/>
+            <AppBarButton Label="Home"   Icon="Home" Click="Home_OnClick" />
+            <AppBarButton Label="Logout" Icon="Go" Click="Logout_OnClick" />
         </CommandBar>
     </Page.TopAppBar>
-
-    <Page.Resources>
-        <Storyboard x:Name="anim">
-            <FadeInThemeAnimation AutoReverse="True" TargetName="{x:Bind Background}" Duration="00:00:0.5" />
-        </Storyboard>
-    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -53,25 +47,29 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <Grid VerticalAlignment="Stretch" Background="{StaticResource MainBackgroundBrush}">
+            <HyperlinkButton x:Name="ToggleMenuButton" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource MainBackgroundBrush}" Click="OnToggleMenu" ClickMode="Release"/>
+            
+        </Grid>
 
-        <HyperlinkButton x:Name="ToggleMenuButton" Foreground="White" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{StaticResource MainBackgroundBrush}" Click="OnToggleMenu" ClickMode="Release"/>
-
-        <SplitView Grid.Column="1" CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline" x:Name="MainSplit">
+        <SplitView Grid.Column="1" CompactPaneLength="200" OpenPaneLength="200" DisplayMode="CompactInline" x:Name="MainSplit" PaneBackground="{StaticResource MainBackgroundBrush}">
             <SplitView.Pane>
-                <ListView HorizontalAlignment="Stretch" SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList, Mode=OneWay}" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListView.ItemContainerStyle>
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{StaticResource MainBackgroundBrush}">
+                    <ListView HorizontalAlignment="Stretch" SelectionMode="Single" ItemsSource="{x:Bind CurrentTripList, Mode=OneWay}" x:Name="TripList" SelectionChanged="TripList_OnSelectionChanged" Background="{StaticResource MainBackgroundBrush}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
 
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="viewModel:TripViewModel">
-                            <custom:TripControl Trip="{x:Bind Path=Self}" TripList="{Binding ElementName=TheMainPage, Path=CurrentTripList}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewModel:TripViewModel">
+                                <custom:TripControl Trip="{x:Bind Path=Self}" TripList="{Binding ElementName=TheMainPage, Path=CurrentTripList}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
             </SplitView.Pane>
             <ContentControl x:Name="TripContent" VerticalContentAlignment="Stretch" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
         </SplitView>
