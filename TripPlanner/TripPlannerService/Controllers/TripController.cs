@@ -125,7 +125,7 @@ namespace TripPlannerService.Controllers
                 }
 
                 dbContext.SaveChanges();
-                return trip.Id;
+                return item.Id;
             }
             else
             {
@@ -138,7 +138,8 @@ namespace TripPlannerService.Controllers
         public void UpdateItemChecked(int itemId, int isChecked)
         {
             Item item = dbContext.Items.Find(itemId);
-            Trip trip = dbContext.Trips.First(tr => tr.UserEmail == User.Identity.Name && tr.Items.Any(it => it.Id == item.Id));
+            Trip trip = dbContext.Trips.First(tr => tr.UserEmail.ToLower() == User.Identity.Name.ToLower() && tr.Items.Any(it => it.Id == item.Id));
+
             if (item != null && trip != null)
             {
                 item.IsChecked = isChecked == 1;

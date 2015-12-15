@@ -48,8 +48,9 @@ namespace TripPlanner.ui
                     Login(null, null);
                 }
             }
-            catch (Exception)
+            catch
             {
+                // no credentials present, just ignore
             }
 
             if (e.Parameter != null)

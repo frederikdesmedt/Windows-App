@@ -30,7 +30,7 @@
                               IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=OneWay}" OnIsEditingChanged="TripTitle_IsEditingChanged" 
                               RelativePanel.LeftOf="Navigate"/>
         <AppBarButton x:Name="Navigate" Label="Navigate" Icon="Map" Click="AppBarButton_Click" RelativePanel.AlignRightWithPanel="True"/>
-        <ListView x:Name="ItemList" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="TripTitle" ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
+        <ListView RelativePanel.Above="TripViewCommandBar" x:Name="ItemList" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.Below="TripTitle" ItemsSource="{Binding Trip.ItemList, Mode=OneWay}" Grid.Row="1" HorizontalContentAlignment="Stretch" SelectionMode="None" VerticalAlignment="Stretch">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -53,7 +53,7 @@
 
         </ListView>
 
-        <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+        <CommandBar Style="{StaticResource CommandBarStyle}" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignRightWithPanel="True" x:Name="TripViewCommandBar">
             <AppBarButton Label="Edit" Click="OnEdit" Icon="Edit"/>
             <AppBarButton Label="Remove" Icon="Delete" Click="OnDelete"/>
             <AppBarButton Label="Add" Icon="Add" Click="OnAdd"/>

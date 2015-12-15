@@ -73,7 +73,7 @@ namespace TripPlanner.Model
             locator.DesiredAccuracyInMeters = 50;
             TimeSpan maxAge = new TimeSpan(0, 0, 1);
             TimeSpan timeout = new TimeSpan(0, 0, 15);
-            var position = await locator.GetGeopositionAsync();
+            // var position = await locator.GetGeopositionAsync();
 
             var basicGeoposition = new BasicGeoposition();
             var point = new Geopoint(basicGeoposition);
