@@ -125,9 +125,6 @@
     <Compile Include="ui\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ui\SelectIcon.xaml.cs">
-      <DependentUpon>SelectIcon.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ui\TripControl.xaml.cs">
       <DependentUpon>TripControl.xaml</DependentUpon>
     </Compile>
@@ -182,10 +179,6 @@
     <Page Include="ui\Navigate.xaml">
     </Page>
     <Page Include="ui\RegistrationPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ui\SelectIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

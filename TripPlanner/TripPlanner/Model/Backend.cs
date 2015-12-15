@@ -127,6 +127,12 @@ namespace TripPlanner.Model
             _authenticationToken = "";
             _authenticationTokenType = "";
             Username = null;
+            PasswordVault vault = new PasswordVault();
+            var credentials = vault.FindAllByResource("creds");
+            foreach (var credential in credentials)
+            {
+                vault.Remove(credential);
+            }
         }
 
         public async Task<IEnumerable<Trip>> GetTrips()

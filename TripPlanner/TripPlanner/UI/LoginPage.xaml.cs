@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Security.Credentials;
 using Windows.System;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -33,6 +34,17 @@ namespace TripPlanner.ui
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            PasswordVault vault = new PasswordVault();
+            var credentials = vault.FindAllByResource("creds");
+            if (credentials.Any())
+            {
+                var credential = credentials.First();
+                Username.Text = credential.UserName;
+                credential.RetrievePassword();
+                Password.Password = credential.Password;
+                Login(null, null);
+            }
+
             if (e.Parameter != null)
             {
                 Username.Text = e.Parameter.ToString();
