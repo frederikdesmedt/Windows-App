@@ -76,5 +76,9 @@ namespace TripPlanner.ui
         //    // Add the MapLayer to the Map
         //    controlMap.Layers.Add(ml);
         //}
+        private void DestinationMap_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            destinationMap.MapServiceToken = "AvC9TPmIp6G7RwtF0EDPAUcUTHz7qGrUMLAo_yDYmFnEdZ8xXt-Yn0Xk-9Q7KK-A";
+        }
     }
 }

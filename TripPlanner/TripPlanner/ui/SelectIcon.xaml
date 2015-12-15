@@ -12,7 +12,7 @@
     <GridView>
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapGrid  HorizontalChildrenAlignment="Stretch" Orientation="Horizontal" PointerPressed="wrapGrid_PointerPressed" />
+                <WrapGrid  HorizontalChildrenAlignment="Stretch" Orientation="Horizontal" PointerPressed="wrapGrid_PointerPressed" Name="wrapGrid" />
                 
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>

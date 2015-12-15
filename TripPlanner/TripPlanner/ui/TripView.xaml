@@ -11,8 +11,21 @@
    
     mc:Ignorable="d"
     Name="UcTripView">
+    
+    <UserControl.Resources>
+        <Storyboard x:Name="sb">
+            <DoubleAnimation From="0" To="255" Storyboard.TargetName="colTransform" Storyboard.TargetProperty="Opacity" Duration="00:00:0.5"/>
+        </Storyboard>
+    </UserControl.Resources>
 
     <RelativePanel Name="panel">
+        <RelativePanel.Background>
+            <SolidColorBrush>
+                <SolidColorBrush.Transform>
+                    <TranslateTransform x:Name="colTransform" />
+                </SolidColorBrush.Transform>
+            </SolidColorBrush>
+        </RelativePanel.Background>
         <ui:EditableTextBlock x:Name="TripTitle" EditableText="{x:Bind Trip.Trip.Name, Mode=TwoWay}" FontSize="36" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Margin="10" 
                               IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=OneWay}" OnIsEditingChanged="TripTitle_IsEditingChanged" 
                               RelativePanel.LeftOf="Navigate"/>

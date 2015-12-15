@@ -18,6 +18,12 @@
         </CommandBar>
     </Page.TopAppBar>
 
+    <Page.Resources>
+        <Storyboard x:Name="anim">
+            <FadeInThemeAnimation AutoReverse="True" TargetName="{x:Bind Background}" Duration="00:00:0.5" />
+        </Storyboard>
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>

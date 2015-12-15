@@ -25,10 +25,10 @@ namespace TripPlanner.Model
 
         public async Task<MapLocation> RegisterTrip(Trip t)
         {
-            if (LocationMapping.ContainsKey(t))
-            {
-                return LocationMapping[t];
-            }
+            //if (LocationMapping.ContainsKey(t))
+            //{
+            //    return LocationMapping[t];
+            //}
             MapLocation ml = await GetPositionFromAddressAsync(t.Name);
             LocationMapping.Add(t, ml);
             return ml;
@@ -95,7 +95,16 @@ namespace TripPlanner.Model
 
             if (mapLocationFinderResult.Status == MapLocationFinderStatus.Success)
             {
-                return mapLocationFinderResult.Locations[0];
+                try
+                {
+                    return mapLocationFinderResult.Locations[0];
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+                
+                
             }
 
             return default(MapLocation);

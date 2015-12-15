@@ -7,9 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.Printing.OptionDetails;
+using Windows.Services.Maps;
 using Windows.UI.Notifications;
 using TripPlanner.Annotations;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -30,6 +33,11 @@ namespace TripPlanner.Model
             get { return itemList; }
             set { itemList = value; OnPropertyChanged(nameof(ItemList)); }
         }
+
+        [JsonIgnore]
+        public BitmapImage PopularImage { get; set; }
+
+        public MapLocation Location { get; set; }
 
         private string name = "";
 
