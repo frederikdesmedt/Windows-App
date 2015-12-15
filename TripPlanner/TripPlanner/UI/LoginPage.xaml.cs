@@ -33,6 +33,10 @@ namespace TripPlanner.ui
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            if (e.Parameter != null)
+            {
+                Username.Text = e.Parameter.ToString();
+            }
             
         }
 
@@ -60,6 +64,11 @@ namespace TripPlanner.ui
         {
             if (e.Key == VirtualKey.Enter)
                 Login(null, null);
+        }
+
+        private void Register(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (RegistrationPage));
         }
     }
 }
