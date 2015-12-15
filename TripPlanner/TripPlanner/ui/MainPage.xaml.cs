@@ -107,12 +107,13 @@ namespace TripPlanner
             }
         }
 
-        private async void OnTripAdded(string name, DateTime date)
+        private async void OnTripAdded(string name, DateTime date, string glyph)
         {
             TripViewModel trip = new TripViewModel(new Trip
             {
                 Name = name,
-                Date = date
+                Date = date,
+                Icon = glyph
             });
 
             CurrentTripList.Add(trip);

@@ -87,5 +87,10 @@ namespace TripPlanner.ui
                 }
             }
         }
+
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof (LoginPage));
+        }
     }
 }

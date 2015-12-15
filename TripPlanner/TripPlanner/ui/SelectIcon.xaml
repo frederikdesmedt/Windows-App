@@ -9,16 +9,17 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <GridView>
+    <GridView ItemsSource="">
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapGrid  HorizontalChildrenAlignment="Stretch" Orientation="Horizontal" PointerPressed="wrapGrid_PointerPressed" />
-                
+                <ItemsWrapGrid  Orientation="Horizontal">
+                    
+                </ItemsWrapGrid>
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
 
         <ItemsControl.Items>
-            <FontIcon Glyph="{Binding Glyph}"/>
+            <FontIcon Glyph="{x:Bind }"/>
             
         </ItemsControl.Items>
     </GridView>

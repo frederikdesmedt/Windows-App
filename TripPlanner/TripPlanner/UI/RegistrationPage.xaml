@@ -8,7 +8,7 @@
     mc:Ignorable="d" Style="{StaticResource DefaultPageStyle}">
 
     <RelativePanel>
-        <Image Source="../../Assets/palm-tree-silhouette.png" Margin="0 0 0 20" Width="230" HorizontalAlignment="Center"
+        <Image Source="../../Assets/palm-tree-silhouette.png" Margin="0 0 0 20" Width="300" HorizontalAlignment="Center"
                RelativePanel.Above="Username" RelativePanel.AlignHorizontalCenterWith="Username"/>
         <TextBox x:Name="Username" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" PlaceholderText="Email" Width="250" KeyUp="Username_OnKeyUp"/>
         <PasswordBox x:Name="Password" PlaceholderText="Password" Margin="0 10 0 0" Width="250" RelativePanel.Below="Username" RelativePanel.AlignHorizontalCenterWith="Username" KeyUp="Password_OnKeyUp"/>
@@ -17,6 +17,6 @@
             <TextBlock Text="Register" HorizontalAlignment="Center"/>
         </Button>
         <TextBlock RelativePanel.AlignHorizontalCenterWith="Username" RelativePanel.Below="RegisterButton" Foreground="White" FontSize="18" x:Name="Error" TextWrapping="Wrap" />
-        <HyperlinkButton Margin="0 0 0 20" Foreground="White" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWith="RegisterButton" Content="Already have an account? Click here to login"/>
+        <HyperlinkButton Margin="0 0 0 20" Foreground="White" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignHorizontalCenterWith="RegisterButton" Content="Already have an account? Click here to login" Click="Login"/>
     </RelativePanel>
 </Page>
