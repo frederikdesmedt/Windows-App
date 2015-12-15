@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TripPlanner.Model;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -66,15 +67,48 @@ namespace TripPlanner
 
         public void OpenDetails(TripViewModel trip)
         {
-            SetBackgroundToLocation(trip.Trip);
             TripContent.Content = new TripView(this, trip);
+            SetBackgroundToLocation(trip.Trip);
         }
 
         private async void SetBackgroundToLocation(Trip trip)
         {
-            MapLocation location = await Backend.MapService.RegisterTrip(trip);
-            BitmapImage img = await Backend.MapService.GetStreetviewImage(location);
-            Background = new ImageBrush() { ImageSource = img, Stretch = Stretch.UniformToFill };
+            Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
+            if (trip.Location == null)
+            {
+                trip.Location = await Backend.MapService.RetrieveTrip(trip);
+            }
+            
+            MapLocation location = trip.Location;
+
+            if (location != null)
+            {
+                if (trip.PopularImage == null)
+                {
+                    var result = await Backend.MapService.GetStreetviewImage(location);
+                    trip.PopularImage = result;
+                }
+
+                if (trip.PopularImage == null)
+                {
+                    Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
+                    var tripView = (TripView) TripContent.Content;
+                    if (tripView != null)
+                    {
+                        tripView.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                    }
+                }
+                else
+                {
+                    Background = new ImageBrush() { ImageSource = trip.PopularImage, Stretch = Stretch.UniformToFill };
+                    var tripView = (TripView)TripContent.Content;
+                    if (tripView != null)
+                    {
+                        tripView.Background = new SolidColorBrush(Color.FromArgb(130, 50, 50, 50));
+                    }
+                }
+            }
+            
         }
 
         public void OpenMainPage()

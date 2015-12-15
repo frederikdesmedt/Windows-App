@@ -12,6 +12,6 @@
 
     <Grid>
         <TextBlock x:Name="destination">Brussel</TextBlock>
-        <maps:MapControl x:Name="destinationMap" ZoomInteractionMode="GestureAndControl" TiltInteractionMode="GestureAndControl"/>
+        <maps:MapControl x:Name="destinationMap" ZoomInteractionMode="GestureAndControl" Loaded="DestinationMap_OnLoaded" TiltInteractionMode="GestureAndControl"/>
     </Grid>
 </UserControl>

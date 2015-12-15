@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using TripPlanner.Model;
@@ -45,17 +47,27 @@ namespace TripPlanner.ui
             }
         }
 
+        private Brush _background;
+
+        public new Brush Background
+        {
+            get { return _background; }
+            set
+            {
+                _background = value;
+                panel.Background = _background;
+            }
+        }
+
         public TripView()
         {
             this.InitializeComponent();
-            
         }
 
         public TripView(MainPage mp, TripViewModel trip) : this()
         {
             Trip = trip;
             mainPage = mp;
-            panel.Background = new SolidColorBrush(Color.FromArgb(90, 0, 0, 0));
         }
 
         //protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -169,10 +181,15 @@ namespace TripPlanner.ui
 
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            var bla = new Navigate();
-            mainPage.MainContent = bla;
-            MapLocation location = await Backend.MapService.RegisterTrip(Trip.Trip);
-            bla.SetDestination(location);
+            var nav = new Navigate();
+            mainPage.MainContent = nav;
+
+            if (Trip.Trip.Location == null)
+            {
+                Trip.Trip.Location = await Backend.MapService.RetrieveTrip(Trip.Trip);
+            }
+
+            nav.SetDestination(Trip.Trip.Location);
         }
 
         private void TripTitle_IsEditingChanged(bool isEditing, Item item)
