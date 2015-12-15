@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Padding="10" HorizontalAlignment="Stretch" Orientation="Vertical">
+    <StackPanel Padding="10 5 10 10" HorizontalAlignment="Stretch" Orientation="Vertical">
         <StackPanel Orientation="Vertical">
             <TextBlock Text="Location" FontSize="30"/>
             <TextBox PlaceholderText="Where do you want to go?" HorizontalAlignment="Left" x:Name="Name" Width="300"/>

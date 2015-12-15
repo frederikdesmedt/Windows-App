@@ -139,6 +139,7 @@ namespace TripPlanner
             if (trip?.Trip.Id == -1)
             {
                 AddTripView addTrip = new AddTripView();
+                addTrip.Background = new SolidColorBrush(Color.FromArgb(255, 65, 131, 215));
                 TripContent.Content = addTrip;
                 addTrip.TripAdded += OnTripAdded;
                 MainSplit.IsPaneOpen = false;
