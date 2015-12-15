@@ -19,7 +19,12 @@ namespace TripPlanner.ui
 {
     public sealed partial class AddTripView : UserControl
     {
-        public delegate void TripAddedDelegate(string name, DateTime date);
+        private List<string> Glyphs { get; set; } = new List<string>
+        {
+            "\uE10F", "\uE113", "\uE11D", "\uE122", "\uE128", "\uE12B", "\uE139", "\uE13D", "\uE14D", "\uE163", "\uE170", "\uE192", "\uE19F", "\uE19E", "\uE1C3", "\uE1C4", "\uE1DE"
+        };
+
+        public delegate void TripAddedDelegate(string name, DateTime date, string glyph);
 
         public event TripAddedDelegate TripAdded;
 
@@ -32,7 +37,7 @@ namespace TripPlanner.ui
 
         private void OnAddTrip(object sender, RoutedEventArgs e)
         {
-            TripAdded?.Invoke(Name.Text, Date.Date?.Date ?? DateTime.Today);
+            TripAdded?.Invoke(Name.Text, Date.Date?.Date ?? DateTime.Today, GlyphGrid.SelectedItem as string ?? "\uE128");
         }
     }
 }

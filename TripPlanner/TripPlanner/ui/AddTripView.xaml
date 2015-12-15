@@ -9,16 +9,28 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Padding="10" HorizontalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBox PlaceholderText="Where do you want to go?" HorizontalAlignment="Stretch" x:Name="Name"/>
-        <CalendarDatePicker Grid.Row="1" PlaceholderText="When are you going?" HorizontalAlignment="Stretch" x:Name="Date"/>
-        <Button Grid.Row="2" Content="Select an icon" />
-        <Button Grid.Row="3" VerticalAlignment="Bottom" Content="Add the trip" Click="OnAddTrip"/>
-    </Grid>
+    <StackPanel Padding="10" HorizontalAlignment="Stretch" Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Location" FontSize="30"/>
+            <TextBox PlaceholderText="Where do you want to go?" HorizontalAlignment="Left" x:Name="Name" Width="300"/>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="0 20 0 20">
+            <TextBlock Text="Date" FontSize="30"/>
+            <CalendarDatePicker PlaceholderText="When are you going?" HorizontalAlignment="Left" x:Name="Date" Width="300"/>
+        </StackPanel>
+        <TextBlock Text="Choose an icon" FontSize="30"/>
+        <GridView ItemsSource="{x:Bind Glyphs}" x:Name="GlyphGrid">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid  Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <FontIcon Glyph="{Binding}" />
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <Button VerticalAlignment="Bottom" Content="Add the trip" Click="OnAddTrip"/>
+    </StackPanel>
 </UserControl>

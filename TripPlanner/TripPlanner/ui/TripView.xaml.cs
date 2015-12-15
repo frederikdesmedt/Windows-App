@@ -11,6 +11,7 @@ using Windows.Foundation.Collections;
 using Windows.Services.Maps;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -97,6 +98,15 @@ namespace TripPlanner.ui
 
         private async void OnItemToggle(object sender, RoutedEventArgs e)
         {
+            if (usingSpace)
+            {
+                usingSpace = false;
+                var senderBox = (sender as CheckBox);
+                senderBox.IsChecked = !senderBox.IsChecked;
+
+                return;
+            }
+
             Item checkedItem = ((FrameworkElement)sender).DataContext as Item;
             CheckBox usedCheckBox = (CheckBox)e.OriginalSource;
 
@@ -198,6 +208,24 @@ namespace TripPlanner.ui
             if (!isEditing)
             {
                 Backend.Azure.SaveTripWithoutItems(Trip);
+            }
+        }
+
+        private void CheckboxLoad(object sender, RoutedEventArgs e)
+        {
+            CheckBox box = sender as CheckBox;
+            box?.AddHandler(CheckBox.KeyDownEvent, new KeyEventHandler(CheckboxKeyDown), true);
+        }
+
+        private bool usingSpace = false;
+
+        private void CheckboxKeyDown(object sender, KeyRoutedEventArgs routedEventArgs)
+        {
+            if (routedEventArgs.Key == VirtualKey.Space)
+            {
+                var content = ((CheckBox) sender).Content as EditableTextBlock;
+                routedEventArgs.Handled = false;
+                usingSpace = true;
             }
         }
     }

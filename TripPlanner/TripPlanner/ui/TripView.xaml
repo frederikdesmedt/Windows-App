@@ -40,7 +40,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border HorizontalAlignment="Stretch">
-                        <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=OneWay}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Click="OnItemToggle">
+                        <CheckBox DataContext="{Binding}" IsChecked="{Binding IsChecked, Mode=OneWay}"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"  Click="OnItemToggle" Loaded="CheckboxLoad">
                             <CheckBox.Content>
                                 <ui:EditableTextBlock Item="{Binding}" IsEditable="{Binding Trip.IsEditable, ElementName=UcTripView, Mode=OneWay}" OnIsEditingChanged="ItemUpdated"
                                                           HorizontalAlignment="Stretch" IsRemoving="{Binding Trip.IsRemoving, ElementName=UcTripView, Mode=OneWay}" ItemMode="True"
